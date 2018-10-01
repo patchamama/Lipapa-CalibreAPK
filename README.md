@@ -7,8 +7,12 @@ La biblioteca puede ser útil con la ayuda de un plugin que he desarrollado para
 # Getting Started
 Para compilar el código fuente es necesario tener instalado basic4Android (https://www.b4x.com/b4a.html). A partir de aquí, descargar el código fuente, compilarlo e instalar el apk en el dispositivo android.
 
+# Configuration
+Ver archivo instrucciones.txt
+
 ## Example Screenshots
-![GitHub Logo](/examples/example1.jpg)
+![GitHub Logo](/examples/example1.png)
+![GitHub Logo](/examples/example2.png)
 
 # Features
 El programa permite gestionar varias bases de datos sqlite de lipapa o calibre (https://calibre-ebook.com), hacer búsquedas, compartir libro, abrir libro con una aplicación instalada en el dispositivo.
