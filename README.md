@@ -11,7 +11,7 @@ Para compilar el código fuente es necesario tener instalado basic4Android (http
 Ver archivo instrucciones.txt
 
 ## Example Screenshots
-!GitHub Logo](/examples/example1.png =250x)
+!GitHub Logo](/examples/example1.png)
 !GitHub Logo](/examples/example2.png =250x)
 
 # Features
