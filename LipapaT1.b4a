@@ -1,0 +1,4223 @@
+﻿Version=3.82
+IconFile=
+NumberOfModules=0
+Build1=Default,nachoap.lipapamartet1t2
+DoNotOverwriteManifest=False
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.basic4ppc.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="4" />~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~
+NumberOfFiles=76
+File1=0.bmp
+File2=100.bmp
+File3=150.bmp
+File4=200.bmp
+File5=250.bmp
+File6=300.bmp
+File7=350.bmp
+File8=400.bmp
+File9=450.bmp
+File10=50.bmp
+File11=500.bmp
+File12=800x1280x160.bal
+File13=abrirlibropeq.bmp
+File14=aceptar.bmp
+File15=ascendente.bmp
+File16=azw3.bmp
+File17=bd0.bmp
+File18=bd1.bmp
+File19=bd10.bmp
+File20=bd2.bmp
+File21=bd3.bmp
+File22=bd4.bmp
+File23=bd5.bmp
+File24=bd6.bmp
+File25=bd7.bmp
+File26=bd8.bmp
+File27=bd9.bmp
+File28=bdadd.bmp
+File29=bdupdate.bmp
+File30=borrarfiltro.bmp
+File31=borrarfiltro2.bmp
+File32=boton0.bmp
+File33=boton1.bmp
+File34=boton10.bmp
+File35=boton11.bmp
+File36=boton12.bmp
+File37=boton13.bmp
+File38=boton13c.bmp
+File39=boton14.bmp
+File40=boton2.bmp
+File41=boton3.bmp
+File42=boton4.bmp
+File43=boton5.bmp
+File44=boton6.bmp
+File45=boton7.bmp
+File46=boton8.bmp
+File47=boton9.bmp
+File48=botonshare.bmp
+File49=btcancelar.bmp
+File50=cancelar.bmp
+File51=descendente.bmp
+File52=epub.bmp
+File53=fb2.bmp
+File54=filtrar2.bmp
+File55=ftp.bmp
+File56=icoant.bmp
+File57=icoant2.bmp
+File58=icofiltrar.bmp
+File59=icofiltrar2.bmp
+File60=iconook.bmp
+File61=iconook2.bmp
+File62=icoopciones.bmp
+File63=icoopciones2.bmp
+File64=icoordenar.bmp
+File65=icoordenar2.bmp
+File66=icosig.bmp
+File67=icosig2.bmp
+File68=kkk.bal
+File69=libroh.bmp
+File70=licencia.txt
+File71=mayor.bmp
+File72=menor.bmp
+File73=mobi.bmp
+File74=pdf.bmp
+File75=resumen.bmp
+File76=sinportada.jpg
+NumberOfLibraries=7
+Library1=core
+Library2=ftp_auto
+Library3=net
+Library4=phone
+Library5=reflection
+Library6=sql
+Library7=oslibrary
+@EndOfDesignText@
+#Region Module Attributes
+	#FullScreen: True
+	#IncludeTitle: True
+	#ApplicationLabel: Lipapa T1-T2 v1.6.6
+	#VersionCode: 1
+	#VersionName: 1.6.6
+	#SupportedOrientations: portrait
+	#CanInstallToExternalStorage: False
+#End Region
+
+' LIPAPA T1 / T2: Gestor de libros para Sony T1 / T2 y otros lectores de tinta electrónica basados en Android y rooteados.
+' Copyright (C) 2011-2014  Nacho Asensio Pardo
+'
+' This program Is free software: you can redistribute it AND/OR modify
+' it under the terms of the GNU Affero General Public License As published by
+' the Free Software Foundation, either version 3 of the License, OR
+' (at your option) any later version.
+
+' This program Is distributed In the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY OR FITNESS For A PARTICULAR PURPOSE.  See the
+' GNU Affero General Public License For more details.
+
+' You should have received a copy of the GNU Affero General Public License
+' along with this program.  If Not, see <http://www.gnu.org/licenses/>.
+
+' Para los que no se manejan con el inglés: arriba dice básicamente que puedes usar el programa y modificar 
+' el fuente como te dé la gana, bajo las condiciones de licencia de GNU Affero General Public License,
+' y que si se rompe algo al usar el programa la culpa es sólo tuya :), y que si algo no funciona como esperabas...
+' pues "es lo que hay, julay" :) :) :).
+
+'Pendiente
+'-Integrar Cloud con Dropbox(webdav)
+'-Vista lista tipo lipapa marte (actualmente es como vista ficha)
+'-En Modo Cloud(FTP/Dropbox) que descargue las portadas a la sdcard si hay espacio
+'-Mejorar visualización del tamaño de los textos (ver font por defecto en android)
+'-Consultas con ModoDetalle para CPUs > 1GHz
+'-Filtro por formato o pedir libro ebookonmail
+'-Mostrar actualización del programa disponible http://www.basic4ppc.com/android/forum/threads/update-app-using-ftp.16970/
+'- Abrir libros con fbreader
+'- Mostrar los libros en forma de lista como el lipapa Marte para android y Leger Calibre
+'- Posibilidad de insertar nuevas librerías directamente en lipapa Sin necesidad de manipular el archivo de configuración
+'- Mostrar número de páginas/imágenes/notas si aparece en la tabla calibre o lipapa marte
+'- Proponer instalación de programas (fbreader+tts plus, coolreader, ivona tts, moonreader+)
+'- Abrir URL de libro en fuente directa (papyrefb2.com, epublibre.org, epubgratis, amazon,...)
+'- Revisar compartir libros por Email que funcione bien en varios dispositivos
+'- En libros Sin portada, insertar el texto con el título y autor en la portada
+
+' ver http://www.basic4ppc.com/android/forum/threads/open-file-from-network-drive.24518/
+' http://www.basic4ppc.com/android/forum/threads/list-of-known-android-intents-to-do-stuff.9823/#post-179663
+' http://www.basic4ppc.com/android/forum/threads/run-app-from-another-app.13392/#post75586
+' http://www.basic4ppc.com/android/forum/threads/find-the-default-app-of-a-particular-type-of-intent.13580/#post76825
+' http://www.basic4ppc.com/android/forum/threads/show-list-of-apps-for-file-type-and-start-the-app.17348/
+'Dim i As Intent 'Requires a reference to the Phone library
+
+'i.Initialize(i.ACTION_VIEW, ("http://docs.google.com/viewer?url=" & "http://samplepdf.com/sample.pdf"))
+'i.SetType("text/html")
+'StartActivity(i)
+
+'Activity module
+Sub Process_Globals
+Dim BDLipapa As SQL
+Dim RutaBD As String
+Dim RutasBases(10) As String 'Guarda las rutas de hasta 9 bases de datos adicionales
+Dim CuentaNumBases As Int 'Número de bases de datos adicionales
+Dim BDActual As String
+Dim Activa As Boolean
+Dim LongClickPushed As Boolean 'Se pulsó un longclick en los botones de la derecha?
+Dim FTPPortadaDldPending As Int = 0 'Número de portadas en proceso de descarga
+Dim TaskInSecond As String = ""   'Especifica si se está realizando una tarea en segundo plano (por ejemplo, para bajar las portadsa por ftp)
+Dim CurLibros, CurTemp As Cursor
+Dim iPosicion As Int ' Para indicar la posicion del cursor
+Dim iSQLPosInit, iSQLPosCount As Int ' Indica la posición inicial y cantidad de registros devueltos de la BDs
+Dim iNumRegistros As Int ' Número de registros de la tabla tras filtro o número total
+Dim Prefijo, Origen, Destino, RutaPortadas As String ' Ruta de los libros y portadas
+Dim bFiltrar, bOrdenIni, bFiltroIni, bSalirOrd As Boolean
+Dim OrdenAct, FiltroAct As String
+Dim OrdenIni, FiltroIni As String
+Dim bAsc, bPulsado, bMenor, bBase1 As Boolean
+Dim NumLetras As Int
+Dim bOculto, bTablet As Boolean
+Dim bBorrarFiltroRap As Boolean
+Dim bBloquear As Boolean 'Bloquea los botones y funciones. Usado al lanzar diálogos
+Dim FTP, FTP1 As FTP 'Usado para acceder por FTP a colecciones de calibre en dropbox, hidrive, amazon s3...
+Dim vremotetype, vremotehost, vremoteuser, vremotepass, vremotepath, vid_as_identifier, vid_as_customcolumn As String 'Parámetros de acceso vía FTP/samba....
+Dim vUltimoTipoClic As Int 'Contiene 1 si se pulso clic breve para abrir libro o 2 para clic long
+Dim vUltimoFormatClic As String 'Ultimo formato elegido a abrir: pdf,epub,fb2,mobi
+
+Dim Orden As Int ' Tag de opción de ordenación
+Dim Sel1, Sel2, Sel3 As String ' Las tres partes del Select
+Dim ModoDetalle As Boolean 'Si True, se realizan las consultas en calibre con todos los join (más lentas)
+Dim TamTxt As Int 'Tamaño texto de referencia. Dependerá de la resolución
+Dim Timer1 As Timer
+Dim itTitulo, itEtiqueta, itValor As String
+Dim GRuta, GFichero As String 'Para descomponer una ruta en Carpeta y Fichero
+'Dim TasaTamanno As Int 'Para calcular el número de páginas de los libros
+Dim ListaLibros As Map
+Dim ContaHuerfanos As Int
+Dim WithDownladCovers As Boolean
+Dim onDebug As Boolean
+
+Dim OS As OperatingSystem 'Para saber espacio libre en memoria sdcard e interna y frecuencia de cpu
+
+Dim DifX, DifY, panelRigthWidth, PortadaHeight, PortadaWidth As Int 'Para configurar en diferentes resoluciones las ventanas y botones
+
+End Sub
+
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	'These variables can only be accessed from this module.
+	Dim pnLista As Panel
+	Dim pnBotones As Panel
+	Dim pnFicha As Panel
+	Dim CanvasFicha As Canvas
+	Dim pnOrdena As Panel
+	
+	'Dim CanvasOrdena As Canvas
+	Dim pnFiltraCad As Panel
+	Dim pnFiltraNum As Panel
+	Dim pnFiltroRap As Panel
+	Dim pnCambioBase As Panel
+	Dim pnListView As Panel
+	Dim pnTools As Panel
+	'Dim CanvasFiltra As Canvas
+	
+	'Panel de ListView
+	Dim ListView1 As ListView
+	Dim listAppsInt As List
+	Dim LastAppSelected As String
+	Dim lvLabel As Label
+	Dim lvAceptar As ImageView
+	Dim lvSalir As ImageView	
+	
+	'Elementos del panel de cambio de base
+	Dim btBase(10) As ImageView
+	Dim btBaseUpdate(10) As ImageView
+	Dim btBaseDBName(10) As Label
+	Dim imSalirCB, btBDAdd As ImageView
+	Dim btUpdate(10) As ImageView
+
+	'Elementos de la lista visual de libros
+	Dim Portadas(8) As ImageView
+	Dim Estrellas(8) As ImageView
+	Dim Votos(8) As Label
+	Dim ePUBs(8) As ImageView
+	Dim mobis(8) As ImageView
+	Dim fb2s(8) As ImageView
+	Dim pdfs(8) As ImageView
+	'Dim Numeros(8) As Label
+	'Dim Annos(8) As Label
+	Dim Expectativas(8) As Label
+	Dim Paginas(8) As Label
+	
+	Dim RutaCalibrePortada(8) As String		'Ruta a biblioteca calibre en ftp de la portada
+	
+	'Elementos del panel de botones
+	Dim Botones(14) As ImageView
+	
+	'Elementos del panel de datos
+	Dim imAbrirLibro As ImageView 
+	Dim dtTitulo As Label
+	Dim dtEstrellas As ImageView
+	Dim dtVotos As Label
+	Dim dtGenero As Label
+	Dim dtNumero As Label
+	Dim dtIdioma As Label
+	Dim dtFlags As Label
+	Dim dtResumen As Label
+	
+	
+	'Panel de ordenación
+	Dim imAscendente As ImageView
+	Dim imDescendente As ImageView
+	Dim imSalirOrd As ImageView
+	Dim lbOrdenCad As Label
+	
+	'Panel de filtro de cadenas
+	Dim lbFiltroCad As Label
+	Dim edFiltroCad As EditText 
+	Dim imFiltroCad As ImageView
+	Dim imSalirFil1 As ImageView
+	
+	'Panel de filtro de números
+	Dim lbFiltroNum As Label
+	Dim edFiltroNum As EditText 
+	Dim imFiltroNum1, imFiltroNum2 As ImageView
+	Dim imSalirFil2 As ImageView
+	
+	'Panel de filtro rápido
+	Dim imFRAutor As ImageView
+	Dim imFRSaga As ImageView
+	Dim imFRGenero As ImageView
+	Dim imFRTitulo As ImageView
+	Dim imFRIdioma As ImageView
+	Dim imFRBorrar As ImageView
+	Dim imFRFTP As ImageView
+	Dim imSalirFilRap As ImageView
+	
+	'Panel de herramientas
+	Dim imTPortadaF As ImageView
+	Dim imTPortadaH As ImageView
+	Dim imTLibroF As ImageView
+	Dim imTLibroH As ImageView
+	Dim imTSalir As ImageView	
+
+	Dim Titulo As String
+	Dim edInputText As EditText
+	Dim imInputText As ImageView
+	Dim lbInputText As Label
+	Dim pnInputText As Panel
+	
+	'ScrollView Resumen
+	Dim svResumen As ScrollView 
+	Dim lbSubir, lbBajar As Label 'Usadas para hacer el scroll hacia arriba o hacia abajo
+
+End Sub
+
+Sub EjecutarRoot (comando As String)
+Dim Command, Runner As String
+Dim StdOut, StdErr As StringBuilder
+Dim Result As Int
+Dim Ph As Phone
+
+	Runner = File.Combine(File.DirInternalCache, "runner")
+	Command = File.Combine(File.DirInternalCache, "command")
+	File.WriteString(File.DirInternalCache, "runner", "su < " & Command)
+	File.WriteString(File.DirInternalCache, "command", comando & CRLF & "exit") 'Any commands via crlf, and exit at end 
+	StdOut.Initialize
+	StdErr.Initialize
+	Result = Ph.Shell("sh", Array As String(Runner), StdOut, StdErr)
+End Sub
+
+Sub Delay(nMilliSecond As Long)
+Dim nBeginTime As Long
+Dim nEndTime As Long
+	nEndTime = DateTime.Now + nMilliSecond
+	nBeginTime = DateTime.Now
+
+	Do While nBeginTime < nEndTime
+		nBeginTime = DateTime.Now
+		Log(nBeginTime)
+		If nEndTime < nBeginTime Then
+			Return
+		End If
+		DoEvents
+	Loop
+End Sub
+
+'Lee las líneas del fichero lipapa_bds.ini con las Bases de Datos
+Sub PonerListaBDs As Int
+Dim Reader As TextReader
+Dim line, bdsinline, subs() As String
+Dim Cuenta, I As Int
+Dim x As Int 
+	
+	Log(">>>PonerListaBDs: "&RutaBD&"/"&BDActual&" NobdsYa:"&CuentaNumBases)
+	Cuenta = 0
+	
+	For I=1 To 9
+		If I>CuentaNumBases Then
+			btBase(I).Visible = False
+		Else
+			btBase(I).Visible = True
+		End If		
+		'RutasBases(I-1) = ""
+	Next
+	
+	
+	' Activar BD
+	If File.Exists(RutaBD, "lipapa.sqlite") Then
+		BDActual = "lipapa.sqlite"			
+		'BDLipapa.Initialize(RutaBD, "lipapa.sqlite", True)
+		Cuenta=Cuenta+1
+		RutasBases(Cuenta) = RutaBD&"/"&BDActual
+		RutasBases(Cuenta) = RutasBases(Cuenta).Replace("//","/")			
+		btBaseDBName(Cuenta).Text = "lipapa"
+		btBaseDBName(Cuenta).Visible = True
+		btBase(Cuenta).Visible = True		
+		Log("BDActual1: "&RutasBases(Cuenta))		
+	Else If File.Exists(RutaBD, "metadata.db") Then
+		BDActual = "metadata.db"
+		'BDLipapa.Initialize(RutaBD, "metadata.db", True)
+		Cuenta=Cuenta+1
+		RutasBases(Cuenta) = RutaBD&"/"&BDActual
+		RutasBases(Cuenta) = RutasBases(Cuenta).Replace("//","/")			
+		btBaseDBName(Cuenta).Text = GetBDTitleName(RutaBD)
+		btBaseDBName(Cuenta).Visible = True
+		btBase(Cuenta).Visible = True		
+		Log("BDActual2: "&RutasBases(Cuenta))			
+	End If
+	
+		
+'	If File.Exists(RutaBD,BDActual)	Then
+'		Cuenta=Cuenta+1
+'		RutasBases(Cuenta) = RutaBD&"/"&BDActual
+'		RutasBases(Cuenta) = RutasBases(Cuenta).Replace("//","/")			
+'		btBaseDBName(Cuenta).Text = "lipapa"
+'		btBaseDBName(Cuenta).Visible = True
+'		btBase(Cuenta).Visible = True		
+'		Log("BDActual1: "&RutasBases(Cuenta))
+'	End If
+	
+	iPosicion = 0
+	'PonerCursor
+	
+	'Abrir fichero con las rutas y meter en array
+	If File.Exists(RutaBD, "lipapa_bds.ini") Then
+		Log("---Encontrado el archivo de configuración: "&RutaBD&"lipapa_bds.ini")
+    	Reader.Initialize(File.OpenInput(RutaBD, "lipapa_bds.ini"))
+    	
+    	line = Reader.ReadLine
+    
+		Do While (line <> Null) AND (Cuenta < 9)     
+			bdsinline = line
+			If line.IndexOf("%")>-1 Then
+				bdsinline=line.SubString2(0,line.IndexOf("%"))
+			End If
+
+			If (bdsinline.CompareTo("") > 0) Then  ' AND (File.Exists(RutaBD, bdsinline))
+				If bdsinline.IndexOf(".sqlite")=-1 AND bdsinline.IndexOf(".db")=-1 Then
+'					If File.Exists(RutaBD & bdsinline, "metadata.db") Then
+'						bdsinline=bdsinline & "/metadata.db"
+'					End If
+				End If
+				line = line.Replace("//","/")
+				line = line.Trim
+
+'Msgbox(line.CharAt(0),line.CharAt(1))
+
+				If line.CharAt(0)<>"%" AND line.Length>0 Then
+					Cuenta = Cuenta + 1
+					RutasBases(Cuenta) = line
+				Else
+					If Cuenta>0 Then
+						RutasBases(Cuenta) = RutasBases(Cuenta) & line
+					End If
+				End If									
+				
+				If line.Length>0 Then
+					'RutasBases(Cuenta) = line
+					btBase(Cuenta).Visible = True
+					btUpdate(Cuenta).Visible=False
+					If line.Contains("%") Then
+						btBaseDBName(Cuenta).Text = GetBDTitleName(line.SubString2(0,line.LastIndexOf("%")))
+						'FTPMetadataList(line,Cuenta)
+					Else
+						btBaseDBName(Cuenta).Text = GetBDTitleName(RutasBases(Cuenta))
+					End If	
+					btBaseDBName(Cuenta).Visible = True
+					btBase(Cuenta).Visible = True
+				End If
+			End If
+			'Meter línea en bd de rutas (si existe la bd)
+		
+        	line = Reader.ReadLine
+    	Loop
+    	Reader.Close
+		
+		For I=1 To 9
+			Cuenta=I
+			line=RutasBases(Cuenta)
+			If line.Contains("%") Then
+				FTPMetadataList(line,Cuenta)
+			End If
+		Next		
+		
+	Else
+		Log("???No encontrado el archivo de configuración: "&RutaBD&"lipapa_bds.ini")
+	End If
+	
+'	If Cuenta>0 Then
+'		For I=0 To Cuenta
+'			If RutasBases(I)<>"" Then
+'				btBase(I).Visible = True
+'				btBaseDBName(I).Text = GetBDTitleName(RutasBases(I))
+'				btBaseDBName(I).Visible = True
+'			End If
+'		Next		
+'	End If
+	
+	'Devuelve el número de rutas encontradas
+	CuentaNumBases = Cuenta
+	Return Cuenta
+End Sub
+
+Sub AbrirLibro(RutaLibro As String, TipoLibro As Int)
+Dim inAct As Intent
+Dim RutaL, RutaE, sFichero, sOrg, sOrg2, sFicheroDst, vOrigen, vtemp As String
+Dim I, iEspera, iPos As Long
+Dim TR As TextReader
+'Dim share As MESShareLibrary
+
+		RutaLibro = RutaLibro.Replace("\", "/")
+		vOrigen = Origen
+		sFichero = ""
+		
+		If BDActual.IndexOf(".sqlite")>-1 Then 'Lipapa		
+			If NumLetras < RutaLibro.Length Then
+				' Descartamos los primeros caracteres
+				sFichero = RutaLibro.SubString(NumLetras)
+			Else
+				ToastMessageShow("El libro seleccionado no tiene la ruta asignada. Haz Copiar en ebook desde Lipapa para PC", True)
+			End If
+		Else '.db calibre
+			vOrigen = BDActual.Replace("metadata.db","")
+			sFichero = RutaLibro
+			If (File.Exists(sFichero.SubString2(0,sFichero.LastIndexOf("/")),sFichero.SubString(sFichero.LastIndexOf("/")))) Then
+				vOrigen=""
+			End If
+		End If
+			
+		If RutaLibro.Length>0 AND sFichero.Length>0 Then
+		
+			iPos = RutaLibro.LastIndexOf("/")
+			sFicheroDst = RutaLibro.SubString2(iPos+1, RutaLibro.Length)
+			
+			sOrg = Prefijo & PonerURL(sFicheroDst)
+			sOrg2 = sFichero.Replace("\", "/")
+			
+			If (bOculto) OR ((sOrg2.CharAt(0) = ".") AND (Not(bTablet))) Then
+			' LIBROS EN CARPETA OCULTA -> SI NO EXISTE, COPIAR Y ABRIR COPIA
+				'EjecutarRoot("mkdir /mnt/extsd/MISLIBROS")
+				If Not(File.Exists(Destino, sFicheroDst)) Then
+					EjecutarRoot("cat '" & vOrigen & sOrg2 & "'>'" & Destino & sFicheroDst & "'")
+					'EjecutarRoot("busybox cp -p '" & vOrigen & sOrg2 & "'>'" & Destino & sFicheroDst & "'")
+				End If
+				
+				
+				'Esperar a que termine de copiar
+				iEspera = 0
+				Do While Not(File.Exists(Destino, sFicheroDst)) AND (iEspera < 25) 
+					iEspera = iEspera + 1
+					Delay(200) 'Espera 200 milisegundos
+				Loop
+			Else If (sOrg2.CharAt(0) = ".") AND (bTablet) Then
+			' LIBROS NO OCULTOS. En la bd hay rutas con punto que hay que pasar a ruta sin punto -> Eliminamos primara letra de sOrg2
+				sOrg = "file:" & vOrigen & sOrg2.SubString(1)
+			Else
+			' LIBROS NO OCULTOS -> ABRIR DIRECTAMENTE
+				sOrg2= sOrg2.Replace("///","/").Replace("//","/")
+				sOrg = "file:" & vOrigen & sOrg2
+			End If
+			
+			ToastMessageShow(sOrg,True)
+			Log("Abriendo: " & sOrg)
+			
+			If TipoLibro=9 Then 'ShareIt
+				'share.sharebinary("file:/" & RutaLibro, "text/plain", "Do you see this?","")
+				Dim Message As Email
+			    Message.To.Add("")
+				vtemp = sOrg.SubString(sOrg.LastIndexOf("/")+1)
+			    Message.Subject = vtemp.Replace("%20"," ")
+			    Message.Attachments.Add(sOrg)
+			    StartActivity(Message.GetIntent)
+			Else			
+				
+				Try
+					inAct.Initialize(inAct.ACTION_VIEW, sOrg)
+					
+					If CurLibros.GetString("FORMATO").EqualsIgnoreCase("PDF") AND TipoLibro = 1 Then
+						inAct.SetType("application/pdf")
+					Else
+						'inAct.SetType("text/*")						
+						inAct.SetType("*/*")
+						'inAct.SetType("text/xml")												
+					End If								
+					
+					If TipoLibro = 1 Then
+						inAct.SetComponent("org.coolreader/.CoolReader")
+						'inAct.SetComponent("org.geometerplus.android.fbreader/.FBReader")
+						'inAct.SetComponent("org.geometerplus.fbreader.book.Book")
+					Else If TipoLibro=2 Then
+						inAct.WrapAsIntentChooser("Seleccione el visor:")						
+					Else If TipoLibro=5 Then 'Abrir con una aplicación instalada...
+						'Dim In As Intent
+						Dim pm As PackageManager
+						'RutaLibro=RutaLibro.Replace("//","/").Replace("//","/")
+						'sOrg="file:"&RutaLibro
+						'In.Initialize(In.ACTION_VIEW, sOrg)
+						'In=pm.GetApplicationIntent(LastAppSelected)
+						Dim vtest As String = pm.GetApplicationIntent(LastAppSelected)
+						'Msgbox(vtest, "file:"&RutaLibro)
+						If vtest.Contains("cmp=") Then
+							vtest=vtest.SubString2(vtest.IndexOf("cmp=")+4,vtest.IndexOf("}"))
+							vtest=vtest.Trim
+							inAct.SetComponent(vtest)
+						Else
+						    If LastAppSelected.ToUpperCase.Contains("FBREADER") Then
+								vtest=LastAppSelected&"/.InfoActivity"
+								inAct.SetComponent(vtest)						
+							Else
+								inAct=pm.GetApplicationIntent(LastAppSelected)
+							End If
+							'Msgbox(In, LastAppSelected)
+						End If
+					Else 
+						inAct.WrapAsIntentChooser("Seleccione el visor:")						
+					End If
+					
+					If inAct.IsInitialized Then 
+						StartActivity(inAct)
+					Else
+						Msgbox("No se ha podido lanzar la aplicación","Error!")
+					End If
+				Catch
+					ToastMessageShow("No puedo abrir el libro: " & sOrg, True)
+				End Try
+			End If
+		End If
+End Sub
+
+Sub Filtrar
+Dim Aux As String
+Dim I As Int
+Dim bPrimera As Boolean
+
+	'Aux = " "
+	'bPrimera = True
+	'For I = 0 To Filtros.Length  - 1
+	'	If Filtros(I).Length > 0 Then
+'			'Si no es la primera condición, añadir " and "
+'			If Not(bPrimera) Then
+'				Aux = Aux & " and "
+'			Else
+'				bPrimera = False
+'			End If
+'			
+'			If (Campos(I)="NUMERO") OR (Campos(I)="ANNOPUBLICACION") OR (Campos(I)="VALORACION") OR (Campos(I)="EXPECTATIVA") Then
+'				' Añadir condición numérica
+'				If Etiquetas(I).Contains("<=") Then
+'					Aux = Aux & Campos(I) & " <= " & Filtros(I)&" "
+'				Else
+'					Aux = Aux & Campos(I) & " >= " & Filtros(I)&" "
+'				End If
+'			Else If (Campos(I)="FAVORITOS") OR (Campos(I)="LEIDO") OR (Campos(I)="ABANDONADO") OR (Campos(I)="DESCARTABLE") Then
+'				' Tratamiento del booleano
+'				If Filtros(I).CharAt(0) = "S" OR Filtros(I).CharAt(0) = "s" Then
+'					Aux = Aux & Campos (I) & " = 1 " 
+'				Else
+'					Aux = Aux & Campos (I) & " = 0 "	
+'				End If
+'			Else
+'				Aux = Aux & Campos(I) & " like '%" & Filtros(I) & "%' "
+'			End If
+'		End If
+'	Next
+'	
+'	If bPrimera Then
+'		Sel2 = " "
+'	Else
+'		Sel2 = " where " & Aux
+'	End If	
+End Sub
+
+Sub CerrarCursor
+	If CurLibros.IsInitialized Then
+		CurLibros.Close
+	End If
+End Sub
+
+Sub getFieldsLipapaToCalibre(CondBooks As String)
+Dim vSQLJoin As String
+
+	CondBooks =CondBooks.Replace("NUMERO","books.id").Replace("AUTOR","books.author_sort").Replace("SAGA","series.name")
+	CondBooks =CondBooks.Replace("TITULO","books.title").Replace("ANNOPUBLICACION","books.pubdate").Replace("IDIOMA","languages.lang_code")
+	CondBooks =CondBooks.Replace("RESUMEN","comments.text").Replace("ESTRELLAS","(ratings.rating/2)").Replace("GENERO","tags.name")
+	CondBooks =CondBooks.Replace("FORMATO","data.format")
+	
+	Return CondBooks
+End Sub
+
+Sub getGeneraCalibreSQLJoin(CondBooks As String)
+Dim vSQLJoin As String
+
+	CondBooks =getFieldsLipapaToCalibre(CondBooks)
+	
+	vSQLJoin = "" 
+	
+	If CondBooks.Contains("data") Then					
+		vSQLJoin = vSQLJoin & " left join data on books.id=data.book " 
+	End If
+	
+	If CondBooks.Contains("series") Then					
+		vSQLJoin = vSQLJoin & " left join books_series_link on books.id=books_series_link.book " 
+		vSQLJoin = vSQLJoin & " left join series on series.id=books_series_link.series "
+	End If
+	If CondBooks.Contains("comments") Then					
+		vSQLJoin = vSQLJoin & " left join comments on books.id=comments.book "
+	End If					
+	If CondBooks.Contains("languages") Then					
+		vSQLJoin = vSQLJoin & " left join books_languages_link on books_languages_link.book=books.id "
+		vSQLJoin = vSQLJoin & " left join languages on books_languages_link.lang_code=languages.id "
+	End If					
+	If CondBooks.Contains("ratings") Then					
+		vSQLJoin = vSQLJoin & " left join books_ratings_link on books_ratings_link.book=books.id "
+		vSQLJoin = vSQLJoin & " left join ratings on books_ratings_link.rating=ratings.id " 
+	End If					
+	If CondBooks.Contains("tags") Then					
+		vSQLJoin = vSQLJoin & " left join books_tags_link on books_tags_link.book=books.id "
+		vSQLJoin = vSQLJoin & " left join tags on books_tags_link.tag=tags.id " 
+	End If
+	If CondBooks.Contains("identifiers") Then					
+		vSQLJoin = vSQLJoin & " left join identifiers on identifiers.book=books.id  " 
+	End If	
+	
+	Return vSQLJoin
+End Sub
+
+Sub PonerCursor
+Dim SelBooks, CondBooks As String
+
+	Log(">>>PonerCursor: "&BDActual)
+	
+		iSQLPosCount = 300
+		
+		' Cerrar cursor si está abierto
+		If CurLibros.IsInitialized Then
+			CurLibros.Close
+		End If
+		
+		' Activar BD
+		If Not(BDLipapa.IsInitialized) Then
+			If File.Exists(RutaBD, "lipapa.sqlite") Then
+				BDActual = "lipapa.sqlite"			
+				BDLipapa.Initialize(RutaBD, "lipapa.sqlite", True)
+			Else If File.Exists(RutaBD, "metadata.db") Then
+					BDActual = "metadata.db"
+					BDLipapa.Initialize(RutaBD, "metadata.db", True)
+			End If		
+		End If
+
+		Sel3 = ""
+		If FiltroAct = "" Then
+			Sel2 = ""
+		Else
+			Sel2 = "where " & FiltroAct
+		End If
+		
+		CondBooks = Sel2
+		
+		If BDActual.Length=0 Then
+			Log("No hay ninguna BD definida...")
+		Else 'If BDActual.Length>0 Then
+			' Poner Select inicial
+			If BDActual.IndexOf(".sqlite")>-1 Then 'Lipapa
+				' Obtener el número de total de libros
+				If iPosicion=0 Then
+					CurLibros = BDLipapa.ExecQuery("select count(*) from Libros " & Sel2)
+					If CurLibros.RowCount=0 Then
+						iNumRegistros =0
+					Else					
+						CurLibros.Position = 0
+						iNumRegistros = CurLibros.GetInt2(0)
+					End If
+					CurLibros.Close
+				End If
+			
+				Sel1 = "SELECT * FROM Libros " 'Select			
+			Else ' .db > calibre
+				' Obtener el número de total de libros
+				
+				If iPosicion=0 Then				
+					If Sel2="" Then
+						CurLibros = BDLipapa.ExecQuery("select count(*) from books " & Sel2)
+					Else
+						CondBooks = getFieldsLipapaToCalibre(Sel2)
+						
+						SelBooks = "select count(*) from books " 
+						SelBooks = SelBooks & getGeneraCalibreSQLJoin(CondBooks)
+						
+						' Select identifiers.val As Numero from books
+						' left join identifiers on identifiers.book=books.id "
+						' where type='papyrefb2id' "
+						
+						SelBooks = SelBooks & CondBooks '& " group by books.id"
+						
+						Log("SQL: "& SelBooks)
+						CurLibros = BDLipapa.ExecQuery(SelBooks)					
+						'Msgbox(SelBooks,"")
+					End If 				
+					
+					If CurLibros.RowCount=0 Then
+						iNumRegistros =0
+					Else					
+						CurLibros.Position = 0
+						iNumRegistros = CurLibros.GetInt2(0)
+					End If
+					CurLibros.Close
+				End If
+				
+				ModoDetalle=(iNumRegistros<30000)  'Si son pocos registros entonces poner todos los join en calibre sql (consultas más lentas)
+				
+				Sel1 = "Select books.id As NUMERO, books.author_sort As AUTOR, series.name || ' ' || books.series_index as SAGA, books.title as TITULO, books.pubdate as ANNOPUBLICACION, "
+				Sel1 = Sel1 & " books.path as RUTAEBOOK, books.path || '/' || data.name || '.' || data.format as RUTAPAPYRE, (SELECT GROUP_CONCAT(data.format) FROM data where data.book=books.id GROUP BY data.book) as FORMATO, comments.text as RESUMEN, "
+				'Sel1 = Sel1 & " languages.lang_code As IDIOMA,(ratings.rating/2) As ESTRELLAS, tags.name As GENERO, "
+				If Sel2.Contains("IDIOMA") OR ModoDetalle Then
+					Sel1 = Sel1 & " languages.lang_code As IDIOMA, "
+				Else 
+					Sel1 = Sel1 & " '' As IDIOMA, "
+				End If
+				If Sel2.Contains("ESTRELLAS") OR ModoDetalle  Then
+					Sel1 = Sel1 & " (ratings.rating/2) As ESTRELLAS, "
+				Else
+					Sel1 = Sel1 & " 0 As ESTRELLAS, "
+				End If
+				If Sel2.Contains("GENERO") OR ModoDetalle  Then
+					Sel1 = Sel1 & " tags.name As GENERO, "
+				Else
+					Sel1 = Sel1 & " '' As GENERO, "
+				End If
+				Sel1 = Sel1 & " '' as EXPECTATIVA, 0 as NUMLETRAS, '' as LEIDO, '' as FAVORITOS, '' as ABANDONADO, '' as DESCARTABLE, 0 as VOTOS "
+				Sel1 = Sel1 & " from books " 
+				
+				'Sección de left join
+				
+				Sel1 = Sel1 & " left join books_series_link on books.id=books_series_link.book " 
+				Sel1 = Sel1 & " left join series on series.id=books_series_link.series "
+				
+				Sel1 = Sel1 & " left join comments on books.id=comments.book " 
+				Sel1 = Sel1 & " left join data on books.id=data.book  " 
+				If Sel2.Contains("IDIOMA") OR ModoDetalle  Then
+					Sel1 = Sel1 & " left join books_languages_link on books_languages_link.book=books.id "
+					Sel1 = Sel1 & " left join languages on books_languages_link.lang_code=languages.id "
+				End If
+				If Sel2.Contains("ESTRELLAS") OR ModoDetalle  Then
+					Sel1 = Sel1 & " left join books_ratings_link on books_ratings_link.book=books.id "
+					Sel1 = Sel1 & " left join ratings on books_ratings_link.rating=ratings.id " 
+				End If
+				If Sel2.Contains("GENERO") OR ModoDetalle  Then
+					Sel1 = Sel1 & " left join books_tags_link on books_tags_link.book=books.id "
+					Sel1 = Sel1 & " left join tags on books_tags_link.tag=tags.id " 
+				End If
+				If Sel2.Contains("identifiers") Then 
+					Sel1 = Sel1 & " left join identifiers on identifiers.book=books.id  "
+				End If		
+				
+				' Select identifiers.val As Numero from books
+				' left join identifiers on identifiers.book=books.id "
+				' where type='papyrefb2id' "				
+				
+				Sel3 = " group by books.id"		
+			End If 
+			
+			Sel3 = Sel3 & " order by " & OrdenAct & " LIMIT " & iSQLPosInit & ", " & iSQLPosCount
+
+			' Abrir nuevo cursor
+			Log("SQL: "&Sel1 & CondBooks & Sel3)
+			CurLibros = BDLipapa.ExecQuery(Sel1 & CondBooks & Sel3)
+					
+			' Calcular número de registros
+			'iNumRegistros = CurLibros.RowCount			
+			Log("Econtrados: " & iNumRegistros & " LIBROS" & " Activos en sql:"&CurLibros.RowCount)
+			Activity.Title = Titulo & iNumRegistros & " LIBROS (" & GetBDTitleName(RutaBD&BDActual) &")"
+
+			'iPosicion = 0
+		End If
+		Log(">>>PonerCursor NoRegistros: "&iNumRegistros)
+End Sub
+
+Sub GetBDTitleName(bdpath As String)
+Dim t As String
+	bdpath=bdpath.replace("//","/").Replace("/metadata.db","").Replace(".sqlite","")
+	If bdpath.LastIndexOf("/")=bdpath.Length-1 Then
+		bdpath=bdpath.SubString2(0,bdpath.LastIndexOf("/"))
+	End If
+	If bdpath.Contains("%") Then
+		bdpath=bdpath.SubString2(0,bdpath.IndexOf("%"))
+	End If
+	t=bdpath	
+	If t.LastIndexOf("/")>-1 Then
+		Return bdpath.SubString(t.LastIndexOf("/")+1)
+	Else
+		Return bdpath
+	End If
+End Sub
+
+Sub IniFiltroyOrden
+	OrdenAct = OrdenIni
+	FiltroAct = FiltroIni
+End Sub
+
+Sub CerrarBD As Boolean
+Dim Resultado As Boolean
+
+' Cerrar BD
+	Resultado = False
+	
+	Try
+		'Cerrar cursor
+		CerrarCursor
+		
+		' Cerrar BD
+		' Activar BD
+		BDLipapa.Close
+		
+		' Todo OK
+		Resultado = True
+	Catch
+		Resultado = False
+	End Try
+	
+	Return Resultado
+End Sub
+
+Sub AbrirBD As Boolean
+Dim Resultado As Boolean
+
+	Log(">>>AbrirBD"&BDActual)
+
+	' Abrir BD1
+	Resultado = False
+
+	'Reiniciar parámetros de conexiones remotas
+	vremotetype=""
+	vremotehost=""
+	vremoteuser=""
+	vremotepass=""
+	vremotepath=""
+	
+	If FTP.IsInitialized Then  'Reseteamos todas las conexión remotas
+		FTP.Close
+	End If
+	
+	Log("AbrirBD: "&RutaBD)
+	
+	Try		
+		' Activar BD
+		If File.Exists(RutaBD, "lipapa.sqlite") Then
+			BDActual = "lipapa.sqlite"			
+			BDLipapa.Initialize(RutaBD, "lipapa.sqlite", True)
+		Else If File.Exists(RutaBD, "metadata.db") Then
+				BDActual = "metadata.db"
+				BDLipapa.Initialize(RutaBD, "metadata.db", True)
+		End If
+		
+		Log("BDActual1: "&BDActual)
+		
+		
+		If CuentaNumBases=0 Then
+			CuentaNumBases=1
+			RutasBases(CuentaNumBases) = RutaBD&"/"&BDActual
+			RutasBases(CuentaNumBases) = RutasBases(CuentaNumBases).Replace("//","/")			
+			btBaseDBName(CuentaNumBases).Text = "lipapa"
+		End If
+				
+		
+		iPosicion = 0
+		PonerCursor
+		
+		' Todo OK
+		Resultado = True
+	Catch
+		Resultado = False
+	End Try
+	
+	Return Resultado
+End Sub
+
+Sub AbrirOtraBD(NumeroBD As Int) As Boolean
+Dim Resultado As Boolean
+Dim subs() As String
+Dim sConsulta, sAux, RutaOtraBD As String
+
+	Log(">>>AbrirOtraBD: "&NumeroBD)
+	'Abrir BD
+	Resultado = False
+	
+	'Msgbox(NumeroBD&" > "&RutasBases(NumeroBD),"")
+
+	'Reiniciar parámetros de conexiones remotas
+	vremotetype=""
+	vremotehost=""
+	vremoteuser=""
+	vremotepass=""
+	vremotepath=""
+	
+	If FTP.IsInitialized Then  'Resetear todas las conexión remotas
+		FTP.Close
+	End If
+	
+	Try		
+		' Activar BD
+		RutaOtraBD = RutasBases(NumeroBD)
+		Log("..."&NumeroBD&" = "&RutaOtraBD)
+		If RutaOtraBD.Contains("%") Then
+			subs=Regex.Split("%",RutaOtraBD)      
+			If subs.Length>1 Then
+				For x=1 To subs.Length -1
+				   If subs(x).ToLowerCase.IndexOf("type=")>-1 Then
+				   		vremotetype=subs(x).ToLowerCase.replace("type=","")
+				   End If
+				   If subs(x).ToLowerCase.IndexOf("host=")>-1 Then
+				   		vremotehost=subs(x).replace("host=","")
+				   End If
+				   If subs(x).ToLowerCase.IndexOf("user=")>-1 Then
+				   		vremoteuser=subs(x).replace("user=","")
+				   End If
+				   If subs(x).ToLowerCase.IndexOf("pass=")>-1 Then
+				   		vremotepass=subs(x).replace("pass=","")
+				   End If
+				   If subs(x).ToLowerCase.IndexOf("path=")>-1 Then
+				   		vremotepath=subs(x).replace("path=","")
+				   End If	   
+				Next
+				RutaOtraBD = subs(0)
+				RutaOtraBD=RutaOtraBD.replace("metadata.db","")				
+			End If
+		Else
+			RutaOtraBD=RutaOtraBD.replace("metadata.db","")
+		End If	
+		imFRFTP.Visible=True
+		
+		If BDLipapa.IsInitialized Then
+			BDLipapa.Close
+		End If
+		
+		If File.Exists("",RutaOtraBD) Then
+			BDLipapa.Initialize("",RutaOtraBD, True)
+			BDActual = RutaOtraBD	
+		Else 
+			If File.Exists(RutaOtraBD,"metadata.db") Then
+				BDLipapa.Initialize(RutaOtraBD,"metadata.db", True)
+				BDActual = RutaOtraBD
+			Else If File.Exists(RutaBD, RutaOtraBD&"metadata.db") Then
+				BDLipapa.Initialize(RutaBD, RutaOtraBD&"metadata.db", True)
+				BDActual = RutaOtraBD
+			Else
+				If vremotehost<>"" Then
+					btUpdate(NumeroBD).Visible=True
+					FTPDBUpdate_go(RutasBases(NumeroBD))
+				Else
+					Msgbox("BD "&RutaBD&RutaOtraBD&" no encontrada","Error")
+				End If				
+				BDActual =""
+			End If
+		End If
+		
+		If BDActual<>"" Then
+			iPosicion = 0
+			PonerCursor
+			
+			' Todo OK
+			Resultado = True
+		Else
+			Resultado = False
+		End If
+	Catch
+		Resultado = False
+	End Try
+	
+	
+	Return Resultado
+End Sub
+
+
+Sub getCalibreLibPath(DirSearch As String) As String
+Dim DirList As List
+Dim DirCalibre As String
+
+	DirCalibre = ""
+	If File.IsDirectory(DirSearch,"/") Then
+		 DirList.initialize
+		 DirList=File.ListFiles(DirSearch)		 	
+		 	For i = 0 To DirList.Size-1				
+				If File.IsDirectory(DirSearch,DirList.Get(i)) Then
+					If File.Exists(DirSearch & "/" & DirList.Get(i),"metadata.db") Then
+						Log(">>>: "&DirSearch&">"&DirList.Get(i))
+						
+						If CuentaNumBases=0 Then
+							RutaBD=DirSearch & "/" & DirList.Get(i)
+						End If
+						CuentaNumBases=CuentaNumBases+1		
+						RutasBases(CuentaNumBases)=DirSearch & "/" & DirList.Get(i)												
+						DirCalibre=DirCalibre&"%"&DirSearch & "/" & DirList.Get(i)&"%"
+					End If
+				End If
+			Next
+	End If
+	'Log("Final "&DirCalibre)
+	Return DirCalibre
+End Sub
+
+
+Sub Activity_Create(FirstTime As Boolean)
+Dim bMensaje As Boolean
+Dim TR As TextReader
+Dim AuxOculto, Auxiliar2, RutaOpciones, MyPath As String
+Dim vPos As Long
+Dim CalibreDirs, subs() As String
+Dim Cuenta,x As Int
+
+	panelRigthWidth=(Activity.Width*58/600)
+	If ((15*(panelRigthWidth))>Activity.Height) Then 'Ocupa de altura más espacio que el disponible en el dispositivo
+		panelRigthWidth= Abs(Activity.Height/15)		
+	End If
+	
+	'Msgbox(Activity.Height,"Altura: "& (15*(panelRigthWidth)) )
+	
+	PortadaWidth=Floor((Activity.Width - panelRigthWidth)/4)  '134
+	PortadaHeight=Floor(PortadaWidth*216/134)	
+	DifX=Floor((Activity.Width - panelRigthWidth)/4)-134
+	DifY=Floor((Activity.Width - panelRigthWidth)/4*216/134)-216
+
+	onDebug = True
+	iSQLPosInit=0
+	Cuenta=0
+	CuentaNumBases=0
+	'If onDebug Then Msgbox(Activity.Width & " " & Activity.Height,"")
+	
+	'Poner rutas de bds adicionales
+	For i=0 To 9
+		RutasBases(i) = ""
+	Next
+
+	
+	Try
+		RutaOpciones = File.DirRootExternal
+	
+		'Cargar configuración, si existe el fichero ini
+		
+		If File.Exists("/mnt/extsd/", "lipapa_t1.ini") OR File.Exists("/mnt/extsd/", "lipapa_bds.ini") Then 'SonyT1/T2/T3
+			RutaOpciones = "/mnt/extsd/"
+		Else If File.Exists("/mnt/sdcard/", "lipapa_t1.ini") OR File.Exists("/mnt/sdcard/", "lipapa_bds.ini") Then 'kindle fire & Nook Devices
+			RutaOpciones = "/mnt/sdcard/"
+		Else If File.Exists("/mnt/sdcard/external_sd/", "lipapa_t1.ini") OR File.Exists("/mnt/sdcard/external_sd/", "lipapa_bds.ini") Then 'Galaxy S2
+			RutaOpciones = "/mnt/sdcard/external_sd/"
+		Else If File.Exists("/storage/extSdCard/", "lipapa_t1.ini") OR File.Exists("/storage/extSdCard/", "lipapa_bds.ini") Then 'Galaxy S4 & Tagus
+			RutaOpciones = "/storage/extSdCard/"			
+		Else If File.Exists("/mnt/storage/sdcard/", "lipapa_t1.ini") OR File.Exists("/mnt/storage/sdcard/", "lipapa_bds.ini") Then 'Tagus Lux
+			RutaOpciones = "/mnt/storage/sdcard/"									
+		Else If File.Exists("/sdcard/", "lipapa_t1.ini") OR File.Exists("/sdcard/", "lipapa_bds.ini") Then 'Nook SimpleTouch
+			RutaOpciones = "/sdcard/"	
+		Else If File.Exists("/Removable/MicroSD/", "lipapa_t1.ini") OR File.Exists("/Removable/MicroSD/", "lipapa_bds.ini") Then 'ASUS Transformer
+			RutaOpciones = "/Removable/MicroSD/"				
+		Else If File.Exists("/mnt/sdcard-ext/", "lipapa_t1.ini") OR File.Exists("/mnt/sdcard-ext/", "lipapa_bds.ini")  Then 'Motorola
+			RutaOpciones = "/mnt/sdcard-ext/"
+		Else If File.Exists("/storage/sdcard0/", "lipapa_t1.ini") OR File.Exists("/storage/sdcard0/", "lipapa_bds.ini")  Then 'Nook Tablet
+			RutaOpciones = "/storage/sdcard0/"	
+		Else If File.Exists("/storage/sdcard1/", "lipapa_t1.ini") OR File.Exists("/storage/sdcard1/", "lipapa_bds.ini")  Then 'Nook Tablet
+			RutaOpciones = "/storage/sdcard1/"		
+		Else If File.Exists("/mnt/sdcard0/", "lipapa_t1.ini") OR File.Exists("/mnt/sdcard0/", "lipapa_bds.ini")  Then 
+			RutaOpciones = "/mnt/sdcard0/"
+		Else If File.Exists("/storage/emulated/0/", "lipapa_t1.ini") OR File.Exists("/storage/emulated/0/", "lipapa_bds.ini")  Then 
+			RutaOpciones = "/storage/emulated/0/"			
+		End If
+		
+		
+		
+		If RutaOpciones = "" Then
+
+			RutaBD = File.DirRootExternal&"/" '"/mnt/extsd/"			
+			'OrdenIni = "EXPECTATIVA DESC, NUMERO DESC"
+			OrdenIni = "EXPECTATIVA DESC, AUTOR ASC"
+			FiltroIni = ""
+			Origen  = File.DirRootExternal&"/" '"/mnt/extsd/.LIBROS/"
+			Destino = File.DirRootExternal&"/" '"/mnt/extsd/MISLIBROS/"
+			RutaPortadas = File.DirRootExternal&"/" '"/mnt/extsd/.PORTADAS/"
+			NumLetras = 10
+			bOculto = False 'True
+			AuxOculto = False
+			TamTxt = 12
+			
+			If Not(File.Exists(RutaBD, "lipapa_bds.ini")) Then			
+				ProgressDialogShow("Buscando librarías en el dispositivo...")
+				Wait(1) 'DoEvents
+				CalibreDirs=getCalibreLibPath(File.DirRootExternal)
+				CalibreDirs=CalibreDirs & getCalibreLibPath(File.DirInternal)
+				If Not(CalibreDirs.Contains("%"&File.DirDefaultExternal)) Then
+					CalibreDirs=CalibreDirs & getCalibreLibPath(File.DirDefaultExternal)
+				End If
+				If Not(CalibreDirs.Contains("%/mnt/extsd")) AND Not(File.DirRootExternal="/mnt/extsd") Then
+					CalibreDirs=CalibreDirs & getCalibreLibPath("/mnt/extsd")
+				End If		
+				If Not(CalibreDirs.Contains("%/mnt/sdcard")) AND Not(File.DirRootExternal="/mnt/sdcard") Then
+					CalibreDirs=CalibreDirs & getCalibreLibPath("/mnt/sdcard")
+				End If	
+				If Not(CalibreDirs.Contains("%/mnt/sdcard/external_sd")) AND Not(File.DirRootExternal="/mnt/sdcard/external_sd") Then
+					CalibreDirs=CalibreDirs & getCalibreLibPath("/mnt/sdcard/external_sd")
+				End If	
+				If Not(CalibreDirs.Contains("%/storage/extSdCard")) AND Not(File.DirRootExternal="/storage/extSdCard") Then
+					CalibreDirs=CalibreDirs & getCalibreLibPath("/storage/extSdCard")
+				End If		
+				If Not(CalibreDirs.Contains("%/sdcard")) AND Not(File.DirRootExternal="/sdcard") Then
+					CalibreDirs=CalibreDirs & getCalibreLibPath("/sdcard")
+				End If	
+				If Not(CalibreDirs.Contains("%/Removable/MicroSD")) AND Not(File.DirRootExternal="/Removable/MicroSD") Then
+					CalibreDirs=CalibreDirs & getCalibreLibPath("/Removable/MicroSD")
+				End If
+				
+				RutaBD = File.DirRootExternal&"/" '"/mnt/extsd/"
+				If CuentaNumBases>0 Then
+					RutaBD=RutasBases(1).Replace("metadata.db","")
+				End If
+				ProgressDialogHide
+			End If
+			
+'			CalibreDirs=CalibreDirs.Replace("%%","%")
+'			Log("Final dirs: "&CalibreDirs)
+'			If CalibreDirs.Length>0 Then
+'				If CalibreDirs.Contains("%") Then
+'					subs=Regex.Split("%",CalibreDirs)      
+'					If subs.Length>1 Then
+'						For x=0 To subs.Length-1
+'							Log("BD: "&Cuenta&">"&subs(x))
+'						   If subs(x)<>"" Then		
+'							   	Cuenta=Cuenta+1
+'								Log("BD1: "&Cuenta&">"&subs(x))
+'							   	If Cuenta=1 Then
+'									RutaBD = subs(x) '"/mnt/extsd/"
+'								Else
+'									RutasBases(Cuenta-1) = subs(x)
+'									btBase(Cuenta).Visible = True
+'								End If
+'							End If
+'						Next
+'					End If
+'				End If
+'			End If
+	
+		
+			'Msgbox("/mnt/extsd/","lipapa_t1.ini no encontrado!")
+			Log("RutaBD: " & RutaBD)
+		Else If  File.Exists(RutaOpciones, "lipapa_t1.ini") Then
+			'Msgbox(RutaOpciones,"Lipapa_t1.ini Ruta")
+			
+			TR.Initialize(File.OpenInput(RutaOpciones, "lipapa_t1.ini"))
+			' Leer valores fich config lipapa_t1.ini
+			RutaBD = TR.ReadLine			
+			OrdenIni = TR.ReadLine
+			FiltroIni = TR.ReadLine
+			Origen = TR.ReadLine
+			Destino = TR.ReadLine
+			RutaPortadas = TR.ReadLine
+			Auxiliar2 = TR.ReadLine 'Reservada para futuros cambios
+			NumLetras = TR.ReadLine
+			AuxOculto = TR.ReadLine
+			bTablet = False
+			bOculto = True
+			
+			If File.Exists(RutaBD, "lipapa.sqlite") Then 
+				BDActual="lipapa.sqlite"
+			End If
+			
+			Log("Lipapa_t1.ini encontrado bds: "&RutaBD)
+			
+			'En caso de no estar bien definidas las rutas, hacer las correcciones necesarias en base a la ruta a la sdcard
+			vPos = RutaOpciones.LastIndexOf(RutaBD)
+			If vPos = -1 Then
+				'Msgbox(RutaBD & " >>> "& RutaOpciones,"Corrigiendo ruta errónea en lipapa_t1.ini")
+				Origen = Origen.Replace(RutaBD, RutaOpciones)
+				MyPath = File.DirRootExternal & Origen
+				If File.Exists(MyPath, "") = False Then	
+					Origen = RutaOpciones
+				End If
+				Destino = Destino.Replace(RutaBD, RutaOpciones)
+				RutaPortadas = RutaPortadas.Replace(RutaBD, RutaOpciones)
+				Auxiliar2 = Auxiliar2.Replace(RutaBD, RutaOpciones)
+				RutaBD = RutaOpciones
+				'Msgbox(Origen,"Ruta errónea en lipapa_t1")
+			End If
+
+'			CuentaNumBases=1
+'			RutasBases(1)=RutaBD
+'			btBaseDBName(1).Text = GetBDTitleName(RutasBases(1))				
+			
+			
+			' Si estamos en un tablet las rutas pueden venir con un punto (epub para el T1) y hay que pasarlas a
+			' ruta sin punto -> bTablet = True
+			bTablet = False
+			If AuxOculto = "OCULTO" Then
+				bOculto = True
+			Else 
+				bOculto = False
+				If AuxOculto = "TABLET" Then
+					bTablet = True
+				End If	
+			End If
+			TamTxt = TR.ReadLine
+			
+			TR.Close
+		Else
+			RutaBD = RutaOpciones
+			'OrdenIni = "EXPECTATIVA DESC, NUMERO DESC"
+			OrdenIni = "EXPECTATIVA DESC, AUTOR ASC"
+			FiltroIni = ""
+			Origen  = RutaOpciones&"/.LIBROS/"
+			Destino = RutaOpciones&"/MISLIBROS/"
+			RutaPortadas = RutaOpciones&"/.PORTADAS/"
+			NumLetras = 10
+			bOculto = True
+			TamTxt = 12
+		End If
+	Catch
+		'Msgbox("/mnt/extsd/","¡lipapa_t1.ini no encontrado 2!")
+		RutaBD = "/mnt/extsd/"
+		'OrdenIni = "EXPECTATIVA DESC, NUMERO DESC"
+		OrdenIni = "EXPECTATIVA DESC, AUTOR ASC"
+		FiltroIni = ""
+		Origen  = "/mnt/extsd/.LIBROS/"
+		Destino = "/mnt/extsd/MISLIBROS/"
+		RutaPortadas = "/mnt/extsd/.PORTADAS/"
+		NumLetras = 10
+		bOculto = True
+		TamTxt = 12
+'		RutasBases(0)=RutaBD
+'		'btBaseDBName(0).Text = GetBDTitleName(RutasBases(0))
+'		CuentaNumBases=1
+	End Try
+	
+	If Not(File.Exists(Origen,"")) Then
+		Origen  = File.DirRootExternal&"/"
+	End If
+	' Si no existe el destino, tratar de crear la carpeta y si no, definir la sdcard...
+	If Not(File.Exists(Destino,"")) Then
+		If Destino<>"" Then
+			File.MakeDir(File.DirRootExternal, Destino)
+		End If
+		If File.Exists(File.DirRootExternal&"/"&Destino,"") Then 
+			Destino = File.DirRootExternal&"/"&Destino&"/"
+		Else
+			Destino = File.DirRootExternal&"/"
+		End If
+		If Not(File.Exists(Destino,"")) Then
+			Destino =  File.DirInternal&"/"
+		End If
+	End If	
+
+	
+'	TamTxt = access.GetUserFontScale
+'	Log("TamTxt" & TamTxt)
+	
+	bMensaje = False
+
+	Titulo = "Lipapa T1-T2 v1.6.6. HAY "
+	Prefijo = "file:/" & Destino
+
+	bFiltrar = False
+	bOrdenIni = True
+	bFiltroIni = True
+	bBloquear = False
+	bBase1 = True 'Base de datos activa
+	
+	'Descarga las portadas?
+	WithDownladCovers = Not(File.Exists(RutaBD,"notcover"))
+	
+	'Inicializa filtro y orden
+	IniFiltroyOrden
+	
+	'Conercar BD y poner cursor de navegación
+	'AbrirBD
+	'AbrirOtraBD(0)
+	
+	'Msgbox("1","")
+	
+	'Timer1.Interval = 500
+	'Timer1.Initialize("Timer1", 1000)
+	
+	'Botones
+	Log("<InicializarBotones")
+	InicializarBotones
+	
+	'Ficha y lista de portadas
+	Log("<InicializarLista")
+	InicializarLista 'Dibujarlista+Ponercursor
+	
+	'Panel de Cambio de Base
+	Log("<InicializarCambioBase")
+	InicializarCambioBase
+
+	'Poner lista de BDs
+	Log("<PonerListaBDs")
+	PonerListaBDs	
+	
+	'If iNumRegistros=0 Then
+		AbrirOtraBD(1)
+		DibujarLista		
+	'End If
+	
+'	Log("<AbrirOtraBD")
+'	AbrirOtraBD(1)
+'	
+'	DibujarLista
+		
+	DoEvents
+End Sub
+
+Sub Timer1_Tick
+	Timer1.Enabled = False
+	' Poner las imágenes correctas
+
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+	DoEvents
+	
+	' Si cerrar programa
+	If UserClosed Then
+		DoEvents
+		
+		Try
+			'Cerrar cursores
+			CurLibros.Close
+			BDLipapa.Close
+		Catch
+			ToastMessageShow("Problemas al cerrar la Base de Datos", True)
+		End Try
+		
+		DoEvents
+		
+		ExitApplication ' Kill the app
+  End If
+End Sub
+
+
+Sub Activity_KeyPress(KeyCode As Int) As Boolean
+Dim Resp As Int
+Dim bCortar As Boolean
+Dim NumTec As Int
+
+  bCortar = True
+  NumTec = KeyCode
+  Log(KeyCode)
+  Select KeyCode
+  	Case KeyCodes.KEYCODE_BACK
+		Resp = Msgbox2("¿Quieres salir de Lipapa?", "Cerrar Lipapa", "Sí", "", "No", Null)
+				
+		If Resp = DialogResponse.POSITIVE Then
+			bCortar = False
+			Activity.Finish
+			
+			ExitApplication ' Kill the app
+		End If
+	 Case KeyCodes.KEYCODE_LEFT_BRACKET, KeyCodes.KEYCODE_VOLUME_UP, KeyCodes.KEYCODE_MEDIA_PREVIOUS, 92
+		'Anterior
+		pnBotones.Enabled = False
+		pnLista.Visible = False
+
+		If iPosicion >= 8 Then
+			iPosicion = iPosicion - 8
+			DibujarLista
+		End If
+
+		pnLista.Visible = True
+		pnBotones.Enabled = True
+		
+	 Case KeyCodes.KEYCODE_RIGHT_BRACKET, KeyCodes.KEYCODE_VOLUME_DOWN, KeyCodes.KEYCODE_MEDIA_NEXT, 93
+		'Siguiente
+		pnBotones.Enabled = False
+		pnLista.Visible = False
+
+		If iPosicion < iNumRegistros - 8 Then
+			iPosicion = iPosicion + 8
+			DibujarLista
+		End If
+
+		pnLista.Visible = True
+		pnBotones.Enabled = True	
+	Case Else
+		bCortar = False
+  End Select
+  
+  ' ¿Paramos la propagación del Back?
+  Return bCortar
+End Sub
+
+Sub PonerURL(sCadena As String) As String
+Dim I As Long
+Dim sAux As String
+Dim StrOrg() As String
+Dim StrDst() As String
+		
+	StrOrg = Array As String("%", "!", "#", "$", "&", "'", "(", ")", "*", "+", ",", ":", ";", "=", "?", "@", "[", "]", " ", "<", ">", "\", "^", "`", "{", "|", "}" )
+	StrDst = Array As String("%25", "%21", "%23", "%24", "%26", "%27", "%28", "%29", "%2A", "%2B", "%2C", "%3A", "%3B", "%3D", "%3F", "%40", "%5B", "%5D", "%20", "%3C", "%3E", "/", "%5E", "%60", "%7B", "%7C", "%7D")
+	
+	sAux = sCadena
+	For I = 0 To StrOrg.Length-1
+		sAux = sAux.Replace(StrOrg(I), StrDst(I))
+	Next
+	
+	Return sAux
+End Sub
+
+'Descompone una ruta en carpeta y fichero
+Sub DescomponerRuta(RutaFichero As String)
+Dim I As Int
+Dim bEncontrado As Boolean
+
+	'Nos posicionamos en el último caracter
+	I = RutaFichero.Length -1
+	bEncontrado = False
+	GRuta = ""
+	GFichero = ""
+	
+	Do Until (bEncontrado) OR (I<0)
+		If RutaFichero.CharAt(I) = "\" Then
+			bEncontrado = True
+			
+			GRuta = RutaFichero.SubString2(0, I+1)
+			GFichero = RutaFichero.SubString(I+1)
+		Else
+			I = I - 1
+		End If	
+	Loop
+	
+End Sub
+
+
+' Devuelve True si existe el fichero con la portada en la ubicación correcta
+Sub ExistePortada(RutaP As String, sNumLibro As String) As Boolean
+Dim Prefijo, s As String
+Dim bExiste As Boolean
+	
+	' Valor por defecto
+	bExiste = False
+	
+	' Componer subcarpeta con los dos últimos dígitos
+	If sNumLibro.Length > 1 Then
+		Prefijo = sNumLibro.SubString(sNumLibro.Length - 2)
+	Else
+		Prefijo = "0" & sNumLibro
+	End If
+			
+	' Componemos la ruta
+	s = RutaP & Prefijo & "/" & sNumLibro & ".JPG"
+
+	s = s.Replace("\", "/")
+	
+	'Partir la ruta en Carpeta y fichero
+	DescomponerRuta(s)
+			
+	If Not(GRuta = "") AND Not(GFichero = "") Then
+		bExiste = File.Exists(GRuta, GFichero)
+	End If
+	
+	'Devolver si existe o no
+	Return bExiste
+End Sub
+
+Sub PonerInputText
+	lbInputText.Text = itEtiqueta
+	edInputText.Text = itValor
+	
+	pnInputText.Visible = True
+	pnInputText.BringToFront
+End Sub
+
+Sub OrdenaAsc_Click
+	bAsc = True
+	bPulsado = True
+End Sub
+
+Sub OrdenaDesc_Click
+	bAsc = False
+	bPulsado = True
+End Sub
+
+Sub FiltrarCad_Click
+	bPulsado = True
+End Sub
+
+Sub FiltrarNumMenor_Click
+	bMenor = True
+	bPulsado = True
+End Sub
+
+Sub FiltrarNumMayor_Click
+	bMenor = False
+	bPulsado = True
+End Sub
+
+Sub SalirOrd_Click
+	bSalirOrd = True
+	bPulsado = True
+End Sub
+
+Sub InicializarPanelOrden
+'Dim RectPanel As Rect
+
+	' Panel de Ordenación
+	pnOrdena.Initialize("")
+	pnLista.AddView(pnOrdena, 5%x, 5%y, (8*(panelRigthWidth-4)), (4 + (4*(panelRigthWidth-4)))) '148, 150, 246, 158)
+	pnOrdena.Color = Colors.Black
+	pnOrdena.Visible = False
+	
+	'Botón Salir Ordenación
+	imSalirOrd.Initialize("SalirOrd")
+	pnOrdena.AddView(imSalirOrd, (pnOrdena.Width-(panelRigthWidth-11)), 2, panelRigthWidth-10, panelRigthWidth-10) '198, 16, 32, 32)
+	imSalirOrd.Color = Colors.Black
+	imSalirOrd.Gravity = Gravity.FILL
+	imSalirOrd.Bitmap = LoadBitmap(File.DirAssets, "btCancelar.bmp")
+	
+	'Etiqueta con nombre del campo
+	lbOrdenCad.Initialize("")
+	pnOrdena.AddView(lbOrdenCad, 3, (panelRigthWidth),  (pnOrdena.Width-3), (panelRigthWidth)*1)
+	lbOrdenCad.Color = Colors.Transparent
+	lbOrdenCad.TextColor = Colors.White
+	lbOrdenCad.Gravity = Gravity.CENTER
+	lbOrdenCad.TextSize = TamTxt  
+	
+	
+	'Botón Ascendente
+	imAscendente.Initialize("OrdenaAsc")
+	pnOrdena.AddView(imAscendente, (2*(panelRigthWidth-4)),(panelRigthWidth)*2, panelRigthWidth-10, panelRigthWidth-10)
+	imAscendente.Color = Colors.Black
+	imAscendente.Gravity = Gravity.FILL
+	imAscendente.Bitmap = LoadBitmap(File.DirAssets, "ascendente.bmp")
+	
+	'Botón Descendente
+	imDescendente.Initialize("OrdenaDesc")
+	pnOrdena.AddView(imDescendente, (pnOrdena.Width-3*(panelRigthWidth-4)), (panelRigthWidth)*2, panelRigthWidth-10, panelRigthWidth-10)
+	imDescendente.Color = Colors.Black
+	imDescendente.Gravity = Gravity.FILL
+	imDescendente.Bitmap = LoadBitmap(File.DirAssets, "descendente.bmp")
+	
+	'RectPanel.Initialize(4, 238, 4, 140)
+	
+	'CanvasOrdena.Initialize(pnOrdena)
+	'CanvasOrdena.DrawRect(RectPanel, Colors.White, False, 2)
+	
+End Sub
+
+Sub CheckAndDownload
+Dim ttt As Int
+	If TaskInSecond="" Then
+		Return
+	End If
+	FTPPortadaDldPending=0
+	DibujarLista
+	Do Until (iPosicion >= (iNumRegistros-8 )) OR (FTPPortadaDldPending>7)
+		iPosicion = iPosicion + 8
+		'FTPPortadaDldPending=0
+		DibujarLista
+		ttt=0
+		DoEvents
+'			Do Until (FTPPortadaDldPending<=1) 'OR (ttt>0)
+'				Wait(3)
+'				ttt=ttt+1
+'				DoEvents	
+'			Loop
+		'If FTPPortadaDldPending>30 Then ToastMessageShow("Portadas pendientes: "&FTPPortadaDldPending,True)
+	Loop			
+	If (iPosicion >= (iNumRegistros-8)) Then
+		Msgbox("Todas las entradas fueron chequeadas...","Tarea finalizada!")
+		pnBotones.Enabled = True			
+		'Desbloquear botones
+		bBloquear = False
+		TaskInSecond=""
+	End If	
+End Sub
+
+Sub ListView1_ItemClick (Position As Int, Value As Object)
+Dim MyItemText As String =Value
+Dim temp As String
+
+	If MyItemText.trim="" Then
+		Return
+	Else If MyItemText.Contains(" (Id") Then 'caso de pulsar en un elemento de los valores de identificadores listados
+		MyItemText = MyItemText.SubString2(0, MyItemText.LastIndexOf(" ("))
+		MyItemText = MyItemText.Trim
+		lvLabel.Text=MyItemText&" (Filtro Id)"		
+		ListView1.SetSelection(0)
+		ListView1.Clear
+		If CurTemp.IsInitialized Then CurTemp.Close	
+		CurTemp = BDLipapa.ExecQuery("select identifiers.val as itemval, count(*) as vcount from books left join identifiers on identifiers.book=books.id where identifiers.Type='"&MyItemText&"' group by identifiers.val having itemval Is Not Null order by 2 desc LIMIT 0, 300 ")
+		If CurTemp.RowCount>0 Then	
+			For i=0 To CurTemp.RowCount-1
+				CurTemp.Position = i
+				ListView1.AddSingleLine(CurTemp.GetString("itemval")& " ("&CurTemp.GetString("vcount")&")")
+			Next 
+			ListView1.AddSingleLine("")
+			ListView1.AddSingleLine("")
+			Return
+		Else
+			Msgbox("No se ha encontrado ningún elemento con filtro "&MyItemText,"")			
+		End If						
+	Else If lvLabel.Text.Contains(" (Filtro Id)") Then	'Resultado de un filtro de un filtro (consolidación de un campo)...
+		MyItemText = MyItemText.SubString2(0, MyItemText.LastIndexOf(" (")) 'valor del campo
+		temp=lvLabel.Text.SubString2(0, lvLabel.Text.LastIndexOf(" (")) 'campo
+		DefinirFiltro(" identifiers.type='"&temp&"' and identifiers.val like '%"&MyItemText&"%' ", False)		
+	Else If MyItemText.Contains(" (") Then 'caso de pulsar sobre algún valor de un grupo de elementos listados de un campo
+    	MyItemText = MyItemText.SubString2(0, MyItemText.LastIndexOf(" ("))
+		edFiltroCad.Text=MyItemText.Trim
+		If lvLabel.Text="FORMATO" AND BDActual.Contains(".db") Then
+			DefinirFiltro("data.format", False)
+		Else
+			DefinirFiltro(lvLabel.Text, False)
+		End If
+	Else If MyItemText.Contains("Filtro SQL") Then 'si el valor es Ver Filtro SQL
+		Msgbox(FiltroAct,"Filtro SQL")		
+	Else If MyItemText.ToUpperCase.Contains("BAJAR PORTADAS") OR MyItemText.ToUpperCase.Contains("BAJAR EBOOKS") Then 'Bajar Portadas pendientes si configurado ftp
+		Dim TextWriter1 As TextWriter
+	    TextWriter1.Initialize(File.OpenOutput(File.DirRootExternal, "lipapat1.log", True))
+	    TextWriter1.WriteLine(">>>Listado de libros sin portadas")
+	    TextWriter1.Close		
+		pnBotones.Enabled = False	
+		pnListView.Visible = False
+		If MyItemText.ToUpperCase.Contains("BAJAR PORTADAS") Then
+			TaskInSecond="CheckAndDownloadCovers"
+		Else If MyItemText.ToUpperCase.Contains("BAJAR EBOOKS") Then
+			TaskInSecond="CheckAndDownloadEbooks"
+		End If
+		CheckAndDownload
+
+	Else If lvLabel.Text.Contains("Filtros") Then
+		If MyItemText.Contains("FORMATO") Then
+			MeterFiltro("FORMATO", False)
+			Return
+		End If	
+	Else If lvLabel.Text.Contains("Acción con ebook") Then		
+		LastAppSelected=listAppsInt.Get(Position)
+		pnFiltroRap.Visible = False
+		pnLista.Enabled = True
+		bBloquear=True
+		SelecFormat(5) 'Procesa_Libro(5,"")  'Localiza el libro y lo abre con la opción seleccionada
+		bBloquear=False
+'		Dim In As Intent
+'		Dim pm As PackageManager
+'		In.Initialize(In.ACTION_VIEW, "file://")
+'		In=pm.GetApplicationIntent(LastAppSelected)
+'		If In.IsInitialized Then StartActivity(In)
+	Else If lvLabel.Text.Contains("Formatos disponibles") Then
+		Procesa_Libro(vUltimoTipoClic,MyItemText)
+	Else If MyItemText.Contains(">>") Then	'Campo de información
+		Return
+	End If
+	'Msgbox(edFiltroCad.Text,Value)
+	bSalirOrd = False
+	bPulsado = True
+
+	'Ocultar paneles de filtro
+	pnLista.Visible = True
+	pnLista.Enabled = True
+	
+	pnListView.Visible = False
+	
+	bBloquear = False	
+End Sub
+
+Sub lvSalir_Click
+	pnListView.Visible = False
+	bSalirOrd = True
+	bPulsado = True	
+	'Ocultar paneles de filtro
+	pnLista.Visible = True
+	pnLista.Enabled = True
+	
+	pnListView.Visible = False
+	
+	bBloquear = False	
+End Sub
+
+Sub InicializarPanelesFiltro
+'Dim RectPanel As Rect
+
+	'Panel de Lista de opciones
+	pnListView.Initialize("")
+	pnLista.AddView(pnListView, 5%x, 5%y, 80%x, 80%y)
+	pnListView.Color = Colors.Black
+	pnListView.Visible = False
+	'-----	
+	ListView1.Initialize("ListView1")
+    pnListView.AddView(ListView1, 0,(panelRigthWidth)*1, 100%x, pnLista.Height-panelRigthWidth*4)	
+	listAppsInt.Initialize
+	'-----
+	'Etiqueta informativa
+	lvLabel.Initialize("")
+	pnListView.AddView(lvLabel, 3, 2,  (pnLista.Width-3), (panelRigthWidth)*1)
+	lvLabel.Color = Colors.Transparent
+	lvLabel.TextColor = Colors.White
+	lvLabel.Gravity = Gravity.LEFT
+	lvLabel.TextSize = TamTxt
+	'-----
+	'Botón Salir
+	lvSalir.Initialize("lvSalir")
+	pnListView.AddView(lvSalir, (pnListView.Width-(panelRigthWidth)), 2, panelRigthWidth, panelRigthWidth) ' 318, 16, 32, 32)
+	lvSalir.Color = Colors.Black
+	lvSalir.Gravity = Gravity.FILL
+	lvSalir.Bitmap = LoadBitmap(File.DirAssets, "btCancelar.bmp")
+
+	'Panel de Filtro de Cadenas
+	pnFiltraCad.Initialize("")
+	pnLista.AddView(pnFiltraCad, 5%x, 5%y, 80%x, (panelRigthWidth)*5) '88+DifX, 100+DifY, 366+DifX, 270+DifY)
+	pnFiltraCad.Color = Colors.Black
+	pnFiltraCad.Visible = False
+	
+	'Botón Salir Ordenación
+	imSalirFil1.Initialize("SalirOrd")
+	pnFiltraCad.AddView(imSalirFil1, (pnFiltraCad.Width-(panelRigthWidth)), 2, panelRigthWidth, panelRigthWidth) ' 318, 16, 32, 32)
+	imSalirFil1.Color = Colors.Black
+	imSalirFil1.Gravity = Gravity.FILL
+	imSalirFil1.Bitmap = LoadBitmap(File.DirAssets, "btCancelar.bmp")
+	
+	'Etiqueta informativa
+	lbFiltroCad.Initialize("")
+	pnFiltraCad.AddView(lbFiltroCad, 3, (panelRigthWidth)*1,  (pnFiltraCad.Width-3), (panelRigthWidth)*1)
+	lbFiltroCad.Color = Colors.Transparent
+	lbFiltroCad.TextColor = Colors.White
+	lbFiltroCad.Gravity = Gravity.CENTER
+	lbFiltroCad.TextSize = TamTxt
+	
+	'Cuadro de edición
+	edFiltroCad.Initialize("")
+	pnFiltraCad.AddView(edFiltroCad, 3, (panelRigthWidth)*2,  (pnFiltraCad.Width-3), (panelRigthWidth)*1)
+	edFiltroCad.Color = Colors.DarkGray 
+	edFiltroCad.TextColor = Colors.White
+	edFiltroCad.Gravity = Gravity.LEFT 
+	edFiltroCad.TextSize = TamTxt
+	edFiltroCad.ForceDoneButton = True
+	
+	'Botón Aceptar
+	imFiltroCad.Initialize("FiltrarCad")
+	pnFiltraCad.AddView(imFiltroCad, (Floor(pnFiltraCad.Width/2)-(panelRigthWidth)), (panelRigthWidth)*3, panelRigthWidth, panelRigthWidth) '48+DifX, 48+DifY)
+	imFiltroCad.Color = Colors.Black
+	imFiltroCad.Gravity = Gravity.FILL
+	imFiltroCad.Bitmap = LoadBitmap(File.DirAssets, "aceptar.bmp")
+	
+' Panel de Filtro de Números
+	pnFiltraNum.Initialize("")
+	pnLista.AddView(pnFiltraNum,5%x, 5%y, 80%x, (panelRigthWidth)*5) '88+DifX, 100+DifY, 366+DifX, 270+DifY)
+	pnFiltraNum.Color = Colors.Black
+	pnFiltraNum.Visible = False
+	
+	'Botón Salir Ordenación
+	imSalirFil2.Initialize("SalirOrd")
+	pnFiltraNum.AddView(imSalirFil2,(pnFiltraNum.Width-(panelRigthWidth)), 2, panelRigthWidth, panelRigthWidth) ' '318+DifX, 16, 32+DifX, 32)
+	imSalirFil2.Color = Colors.Black
+	imSalirFil2.Gravity = Gravity.FILL
+	imSalirFil2.Bitmap = LoadBitmap(File.DirAssets, "btCancelar.bmp")
+	
+	'Etiqueta informativa
+	lbFiltroNum.Initialize("")
+	pnFiltraNum.AddView(lbFiltroNum, 3, (panelRigthWidth)*1,  (pnFiltraNum.Width-3), (panelRigthWidth)*1)
+	lbFiltroNum.Color = Colors.Transparent
+	lbFiltroNum.TextColor = Colors.White
+	lbFiltroNum.Gravity = Gravity.CENTER
+	lbFiltroNum.TextSize = TamTxt
+	
+	'Cuadro de edición
+	edFiltroNum.Initialize("")
+	pnFiltraNum.AddView(edFiltroNum, 3, (panelRigthWidth)*2,  (pnFiltraNum.Width-3), (panelRigthWidth)*1)'20+DifX, 11+DifY, 326+DifX, 60+DifY)
+	edFiltroNum.Color = Colors.DarkGray 
+	edFiltroNum.TextColor = Colors.White
+	edFiltroNum.Gravity = Gravity.CENTER
+	edFiltroNum.TextSize = TamTxt
+	edFiltroNum.ForceDoneButton = True
+	edFiltroNum.InputType = edFiltroNum.INPUT_TYPE_NUMBERS
+	
+	'Botón <=
+	imFiltroNum1.Initialize("FiltrarNumMenor")
+	pnFiltraNum.AddView(imFiltroNum1, (panelRigthWidth)*2, (panelRigthWidth)*3, panelRigthWidth, panelRigthWidth)
+	imFiltroNum1.Color = Colors.Black
+	imFiltroNum1.Gravity = Gravity.FILL
+	imFiltroNum1.Bitmap = LoadBitmap(File.DirAssets, "menor.bmp")
+	
+	'Botón >=
+	imFiltroNum2.Initialize("FiltrarNumMayor")
+	pnFiltraNum.AddView(imFiltroNum2, (pnFiltraNum.Width)-((panelRigthWidth)*2), (panelRigthWidth)*3, panelRigthWidth, panelRigthWidth)
+	imFiltroNum2.Color = Colors.Black
+	imFiltroNum2.Gravity = Gravity.FILL
+	imFiltroNum2.Bitmap = LoadBitmap(File.DirAssets, "mayor.bmp")
+	
+End Sub
+
+Sub FillInputText
+	' Panel principal
+	pnInputText.SetLayout(0, 0, Activity.Width, Activity.Height)
+	pnInputText.Color = Colors.ARGB(255, 217, 217, 217)
+	pnInputText.Visible = False
+	
+	' Botón salir
+	imInputText.Bitmap = LoadBitmap(File.DirAssets, "aceptar.png")
+	imInputText.Width = 48
+	imInputText.Height = 48
+	imInputText.Left = (pnInputText.Width - imInputText.Width) / 2
+	imInputText.Top = pnInputText.Height - imInputText.Height - 40
+	imInputText.Gravity = Gravity.Fill
+		
+	' Etiqueta
+	lbInputText.SetLayout(10, 40, pnInputText.Width - 20, 80)
+	lbInputText.TextSize =  3 * TamTxt 
+	lbInputText.TextColor = Colors.Black
+	lbInputText.Gravity = Gravity.CENTER
+	
+	' Edit
+	edInputText.SetLayout(10, 150, pnInputText.Width - 20, 80)
+	edInputText.TextSize = 2 * TamTxt
+	edInputText.Color = Colors.ARGB(255, 155, 225, 242)
+	edInputText.Gravity = Gravity.CENTER_VERTICAL + Gravity.LEFT 
+
+End Sub
+
+Sub RutaPortada(NumLibro As String) As String
+Dim sAux, sAuxRuta As String
+
+	sAux = RutaPortadas
+
+	' Extraer los dos últimos
+	If NumLibro.Length >= 2 Then
+		' Quedarse con los dos a la derecha
+		sAux = sAux & NumLibro.SubString(NumLibro.Length - 2) & "/"
+	Else If NumLibro.Length = 1 Then
+		sAux = sAux & "0" & NumLibro & "/"
+	End If
+	
+	Return sAux
+End Sub
+
+Sub BorrarPortada(NumPortada As Int)
+Dim bitPortada, bitEstrellas As Bitmap
+Dim Numero, Estre As Int
+Dim FichEst As String
+Dim RutaPorta, NombrePorta As String
+	Try	
+	' Número
+		'Numeros(NumPortada).Visible = False
+		
+	' Portada
+		Portadas(NumPortada).Visible = False
+		
+	' Estrellas
+		Estrellas(NumPortada).Visible = False
+		
+	' Votos
+		Votos(NumPortada).Visible = False
+		
+	' Marca de número de páginas
+		'Paginas(NumPortada).Visible = False
+		
+	' Expectativa
+		Expectativas(NumPortada).Visible = False
+		
+	' Marca de ePUB
+		ePUBs(NumPortada).Visible = False
+		mobis(NumPortada).Visible = False
+		fb2s(NumPortada).Visible = False
+		pdfs(NumPortada).Visible = False		
+
+	' Año publicación
+		'Annos(NumPortada).Visible = False
+	Catch
+		Log(LastException.Message)
+	End Try
+End Sub
+Sub FTP_DownloadProgress (ServerPath As String, TotalDownloaded As Long, Total As Long)
+'    Dim s As String
+'	If Not(ServerPath.Contains("cover.jpg")) Then 'es una portada?
+'	    's = "Downloaded " & Round(TotalDownloaded / 1000) & "KB"
+'		s = "Descargado (" & ServerPath.SubString(ServerPath.LastIndexOf("/")) & ") " & Round(TotalDownloaded / 1000)
+'	    'If Total > 0 Then s = s & " out of " & Round(Total / 1000) & "KB
+'		If Total > 0 Then 
+'			s = s & " de " & Round(Total / 1000) & "KB"
+'			ToastMessageShow(s, False)
+'		End If
+'	End If
+'	'Log(s)
+End Sub
+
+Sub FTP_DownloadCompleted (ServerPath As String, Success As Boolean)
+Dim bitPortada As Bitmap
+Dim i As Int
+Dim vfound As Boolean
+
+	Log("FTP_DownloadCompleted: "&FTPPortadaDldPending&" "&ServerPath)
+    'Log(ServerPath & ", Success=" & Success)
+    If Success = False Then Log(LastException.Message)
+	
+	If ServerPath.ToLowerCase.Contains(".jpg") Then 'es una portada?
+		FTPPortadaDldPending=FTPPortadaDldPending-1
+	End If
+	
+	If Success Then
+		If ServerPath.ToLowerCase.Contains("cover.jpg") Then 'es una portada?
+			vfound = False
+			For i = 0 To 7
+				If ServerPath.Contains(RutaCalibrePortada(i)) Then
+					Log(RutaCalibrePortada(i) & ", Success=" & Success)
+					'If File.Exists(File.DirRootExternal & "/", "cover" & i & ".jpg") Then
+					Try
+						If File.Exists(RutaBD&BDActual.Replace("metadata.db",""),RutaCalibrePortada(i)&"/cover.jpg") Then
+							bitPortada = LoadBitmap(RutaBD&BDActual.Replace("metadata.db",""),RutaCalibrePortada(i)&"/cover.jpg")
+						Else
+							bitPortada = LoadBitmap(File.DirRootExternal & "/", "cover" & i & ".jpg")
+							If Not(File.Exists(RutaBD&BDActual.Replace("metadata.db",""),RutaCalibrePortada(i))) Then								
+								'Msgbox("1 Copiando cover...", RutaBD&BDActual.Replace("metadata.db","")& "/"&"notcover" ) 
+								If (OS.AvailableExternalMemorySize>100000 AND OS.AvailableInternalMemorySize>100000) AND (WithDownladCovers) Then '100kb
+									File.MakeDir(RutaBD&BDActual.Replace("metadata.db",""),RutaCalibrePortada(i))
+									File.Copy(File.DirRootExternal & "/", "cover" & i & ".jpg",RutaBD&BDActual.Replace("metadata.db","")&RutaCalibrePortada(i),"cover.jpg")
+									File.Delete(File.DirRootExternal & "/", "cover" & i & ".jpg")
+								End If
+							End If
+						End If
+					Catch
+						bitPortada.Initialize(File.DirAssets, "SINPORTADA.JPG") 
+					End Try				
+					Portadas(i).Bitmap=bitPortada
+					'Portadas(i).Tag=i
+					'Portadas(i).Visible = True
+					'End If
+					vfound = True
+				End If
+			Next
+			If vfound=False Then
+				Log("No encontrado: " & ServerPath & ", Success=" & Success)
+				
+			End If	
+		Else 'Es un libro
+			Procesa_Libro(vUltimoTipoClic,vUltimoFormatClic)	
+		End If
+	End If
+
+	If (FTPPortadaDldPending<=0) Then
+		If (TaskInSecond="CheckAndDownloadCovers") Then
+			CheckAndDownload
+		Else If (TaskInSecond="CheckAndDownloadEbooks") Then 
+			CheckAndDownload
+		End If
+	End If
+	
+'	If (TaskInSecond="CheckAndDownloadCovers") Then
+'		Return
+'	End If	
+
+End Sub
+
+Sub DibujarPortada(NumPortada As Int, NumReg As Int)
+Dim bitPortada, bitEstrellas As Bitmap
+Dim Numero, Estre As Int
+Dim FichEst As String
+Dim RutaPorta, NombrePorta As String
+Dim Tipo, vRutaCalibreLib As String
+'Dim FTP As FTP_Auto
+		
+Log(">>>DibujarPortada - NumPortada:"&NumPortada&" NumReg:"&NumReg)
+		
+	Log(BDActual & " BD No. " & NumReg & " SQLPos: " & (NumReg-iSQLPosInit) )
+	' Posicionarse
+	CurLibros.Position = NumReg-iSQLPosInit
+
+	If FTP.IsInitialized AND NumPortada=0  Then 		
+		'FTP.SetProcessCompleteOn(True)
+	End If
+		
+	' Preparar portada
+	If BDActual.IndexOf(".sqlite")>-1 Then 'Lipapa		
+		RutaPorta = RutaPortada(CurLibros.GetString("NUMERO"))
+		NombrePorta = CurLibros.GetString("NUMERO") & ".JPG"
+			
+		If File.Exists(RutaPorta, NombrePorta) Then
+			Try
+				bitPortada = LoadBitmap(RutaPorta, NombrePorta)
+			Catch
+				bitPortada.Initialize(File.DirAssets, "SINPORTADA.JPG") 
+			End Try
+		Else
+			bitPortada.Initialize(File.DirAssets, "SINPORTADA.JPG")
+		End If		
+	Else ' .db > calibre
+		If File.Exists(BDActual.Replace("metadata.db",""),"metadata.db") Then
+			RutaPorta = BDActual.Replace("metadata.db","") & "/" & CurLibros.GetString("RUTAEBOOK") & "/"	
+		Else
+			RutaPorta = RutaBD & "/" & BDActual.Replace("metadata.db","") & "/" 
+			Try
+				RutaPorta = RutaPorta & CurLibros.GetString("RUTAEBOOK") & "/"
+			Catch
+				RutaPorta = ""
+			End Try			
+			
+		End If
+		RutaPorta=RutaPorta.Replace("//","/")
+		Log("Portada: "&RutaPorta)
+		NombrePorta = "cover.jpg"
+		
+		If File.Exists(RutaPorta, NombrePorta) Then
+			Try
+				bitPortada = LoadBitmap(RutaPorta, NombrePorta)
+			Catch
+				bitPortada.Initialize(File.DirAssets, "SINPORTADA.JPG") 
+			End Try
+		Else
+			bitPortada.Initialize(File.DirAssets, "SINPORTADA.JPG")
+			'If FTP.WiFi_IsConnected Then
+				If vremotetype="ftp" AND RutaPorta<>"" Then
+					If Not(FTP.IsInitialized) Then 
+						FTP.Initialize("FTP", vremotehost, 21, vremoteuser, vremotepass)
+						FTP.PassiveMode = True
+					End If	
+
+					If File.Exists(File.DirRootExternal & "/", "cover" & NumPortada & ".jpg") Then
+						File.Delete(File.DirRootExternal & "/", "cover" & NumPortada & ".jpg")
+					End If
+				
+					RutaCalibrePortada(NumPortada) = CurLibros.GetString("RUTAEBOOK")
+					vRutaCalibreLib=vremotepath & "/" & CurLibros.GetString("RUTAEBOOK") & "/" & "cover.jpg" '"/public/lipapaebooks/Calibre Library/" & BDActual.Replace("metadata.db","")
+					vRutaCalibreLib=vRutaCalibreLib.Replace("//","/")
+					Log("Cover "&FTPPortadaDldPending&" ftp://" & vremoteuser&":"&vremotepass&"@"&vremotehost&vRutaCalibreLib)
+
+					Dim TextWriter1 As TextWriter
+				    TextWriter1.Initialize(File.OpenOutput(File.DirRootExternal, "lipapat1.log", True))
+				    TextWriter1.WriteLine(CRLF&vRutaCalibreLib)
+				    TextWriter1.Close
+			
+					If OS.AvailableExternalMemorySize>100000 AND OS.AvailableInternalMemorySize>100000 AND (WithDownladCovers) Then '100kb
+						If Not(File.Exists(RutaBD&BDActual.Replace("metadata.db",""),RutaCalibrePortada(NumPortada))) Then
+							File.MakeDir(RutaBD&BDActual.Replace("metadata.db",""),RutaCalibrePortada(NumPortada))
+						End If
+						FTPPortadaDldPending=FTPPortadaDldPending+1
+						FTP.DownLoadFile(vRutaCalibreLib , False, RutaBD&BDActual.Replace("metadata.db","")&RutaCalibrePortada(NumPortada), "cover.jpg")
+					Else
+						FTP.DownLoadFile(vRutaCalibreLib , False, File.DirRootExternal & "/", "cover" & NumPortada & ".jpg")
+					End If
+
+				End If
+		End If		
+	End If
+		
+	' Preparar estrellas
+	Try
+		Estre = CurLibros.GetInt("ESTRELLAS")
+	Catch
+		Estre = 0
+	End Try	
+	
+	
+	' ¿Es ePUB?
+	Try
+		If CurLibros.GetString("FORMATO") = Null Then
+			Tipo = ""
+		Else
+			Tipo = CurLibros.GetString("FORMATO").ToUpperCase
+		End If
+	Catch
+		Estre = 0
+	End Try	
+	
+
+		
+	If Estre = 500 Then 
+		FichEst = "500.bmp"
+	Else If Estre >= 450 Then 
+		FichEst = "450.bmp"
+	Else If Estre >= 400 Then 
+		FichEst = "400.bmp"
+	Else If Estre >= 350 Then 
+		FichEst = "350.bmp"
+	Else If Estre >= 300 Then 
+		FichEst = "300.bmp"
+	Else If Estre >= 250 Then 
+		FichEst = "250.bmp"
+	Else If Estre >= 200 Then 
+		FichEst = "200.bmp"
+	Else If Estre >= 150 Then 
+		FichEst = "150.bmp"
+	Else If Estre >= 100 Then 
+		FichEst = "100.bmp"
+	Else If Estre >= 50 Then 
+		FichEst = "50.bmp"
+	Else 
+		FichEst = "0.bmp"
+	End If
+	
+	bitEstrellas.Initialize(File.DirAssets, FichEst)
+	
+	Try		
+	
+		Numero = CurLibros.GetInt("NUMERO")
+		
+	
+	' Número
+		'Numeros(NumPortada).Tag=NumReg
+		'Numeros(NumPortada).Text=Numero
+		'Numeros(NumPortada).Visible = True
+		
+	' Portada
+		Portadas(NumPortada).Bitmap=bitPortada
+		Portadas(NumPortada).Tag=NumReg
+		Portadas(NumPortada).Visible = True
+		
+	' Estrellas
+		Estrellas(NumPortada).Bitmap=bitEstrellas
+		Estrellas(NumPortada).Tag=NumReg
+		Estrellas(NumPortada).Visible = True
+		
+	' Votos
+		Votos(NumPortada).Tag=NumReg
+		If CurLibros.GetInt("VOTOS") > 0 Then
+			Votos(NumPortada).Text=CurLibros.GetInt("VOTOS")
+		Else
+			Votos(NumPortada).Text=""
+		End If
+		Votos(NumPortada).Visible = True
+		
+	' ¿Es ePUB?
+		If Tipo.Contains("EPUB") Then
+			ePUBs(NumPortada).Visible = True
+		Else
+			ePUBs(NumPortada).Visible = False
+		End If
+		If Tipo.Contains("MOBI") OR Tipo.Contains("AZW3") Then
+			mobis(NumPortada).Visible = True
+		Else
+			mobis(NumPortada).Visible = False
+		End If	
+		If Tipo.Contains("PDF") Then
+			pdfs(NumPortada).Visible = True
+		Else
+			pdfs(NumPortada).Visible = False
+		End If		
+		If Tipo.Contains("FB2") Then
+			fb2s(NumPortada).Visible = True
+		Else
+			fb2s(NumPortada).Visible = False
+		End If
+		
+	' Marca de número de páginas
+		'Paginas(NumPortada).Text= CurLibros.GetString("NUMLETRAS")&"p"
+		'Paginas(NumPortada).Tag=NumReg
+		'Paginas(NumPortada).Visible = True
+		
+	' Expectativa
+		If CurLibros.Getint("EXPECTATIVA") > 0 Then
+			Expectativas(NumPortada).Text=CurLibros.Getint("EXPECTATIVA")
+			Expectativas(NumPortada).Visible = True
+		Else
+			Expectativas(NumPortada).Text=""
+			Expectativas(NumPortada).Visible = False
+		End If
+		Expectativas(NumPortada).Tag=NumReg
+
+	' Año publicación
+		'Annos(NumPortada).Text=CurLibros.Getint("ANNOPUBLICACION")
+		'Annos(NumPortada).Tag=NumReg
+		'Annos(NumPortada).Visible = True
+	Catch
+		Log(LastException.Message)
+	End Try
+End Sub
+
+Sub ReQuery
+Dim PosCursor, Auxi As Int 
+	Try
+		Log("ReQuery...")
+		DoEvents
+		PosCursor = iPosicion
+		
+		' Cerrar cursor
+		CurLibros.Close
+
+		' Poner nuevo select
+		CurLibros = BDLipapa.ExecQuery(Sel1 & Sel2 & Sel3)
+		
+		' Calcular número de registros
+		'iNumRegistros = CurLibros.RowCount
+		Activity.Title = Titulo & iNumRegistros & " LIBROS (" & GetBDTitleName(RutaBD&BDActual) &")"
+		iPosicion = PosCursor
+			
+		' Eliminar ScrollView actual
+		DibujarLista
+		
+		DoEvents
+	Catch
+		Log(LastException.Message)
+	End Try
+End Sub
+
+
+Sub LimpiarSaga(Entrada As String) As String
+Dim I As Int
+Dim Salida As String
+	I = Entrada.Length - 1
+	
+	Do Until (Entrada.CharAt(I) = " ") OR (I < 0)
+		I = I - 1
+	Loop
+	
+	If I > 0 Then
+		Salida = Entrada.SubString2(0, I)
+		Salida = Salida.Replace("(", "")
+		Salida = Salida.Replace(")", "").Trim
+		Return Salida
+	Else 
+		Return Entrada
+	End If
+End Sub
+
+Sub InicializarBotones
+Dim I As Int
+Dim X , Y As Int
+Dim panelRigthWidth As Int
+
+	panelRigthWidth=(Activity.Width*58/600)
+	If ((15*(panelRigthWidth))>Activity.Height) Then 'Ocupa de altura más espacio que el disponible en el dispositivo
+		panelRigthWidth= Abs(Activity.Height/15)		
+	End If	
+
+	'Crear panel de botones
+	pnBotones.Initialize("")
+	Activity.AddView(pnBotones, Activity.Width - panelRigthWidth, 0, panelRigthWidth-2, Activity.Height)
+	pnBotones.Color = Colors.Black
+	pnBotones.Visible = False
+	
+	For I = 0 To 13
+		Botones(I).Initialize("Boton")
+		pnBotones.AddView(Botones(I), 4, 4 + (I*(panelRigthWidth-4)), panelRigthWidth-10, panelRigthWidth-10)
+		Botones(I).Tag = I
+		Botones(I).Color = Colors.Black
+		Botones(I).Gravity = Gravity.FILL
+		If I<13 Then
+		    Log("boton"&I&".bmp")
+			Botones(I).Bitmap= LoadBitmap(File.DirAssets, "boton"&I&".bmp")
+		Else
+			Botones(I).Bitmap= LoadBitmap(File.DirAssets, "BD1.bmp")
+		End If
+	Next
+	
+	pnBotones.Visible = True
+End Sub
+
+Sub LimpiarFiltro
+	Log(">>>LimpiarFiltro")
+	FiltroAct = FiltroIni
+	
+	pnLista.Visible = False
+	
+	iPosicion = 0	
+	PonerCursor
+	
+	DibujarLista
+	pnLista.Visible = True
+End Sub
+
+Sub LimpiarOrdenacion
+	Log(">>>LimpiarOrdenacion")
+	OrdenAct = OrdenIni
+	bOrdenIni = True
+	
+	pnLista.Visible = False
+		
+	iPosicion = 0
+	PonerCursor
+	
+	DibujarLista
+	pnLista.Visible = True
+End Sub
+
+Sub DefinirFiltro(Campo As String, bFiltroNum As Boolean)
+Dim TextoFiltro, SQLParcial As String
+
+		Activity.Title = "Poniendo nuevo filtro. Espera..."
+		ProgressDialogShow("Poniendo nuevo filtro. Espera...")
+		'ToastMessageShow("Poniendo nuevo filtro. Espera...", True)
+		Wait(1) 'DoEvents
+	
+		' Recepcionar valor escrito
+		If bFiltroNum Then
+			TextoFiltro = edFiltroNum.Text.Trim
+		Else
+			TextoFiltro = edFiltroCad.Text.Trim
+		End If
+	
+		'Poner filtro
+		If bFiltroNum Then
+			If bMenor Then 
+				SQLParcial = Campo & " <= "  & TextoFiltro
+			Else
+				SQLParcial = Campo & " >= "  & TextoFiltro
+			End If
+		Else
+			If Campo.Contains("=") OR Campo.ToLowerCase.Contains("like") Then
+				SQLParcial = Campo
+			Else
+				SQLParcial = Campo & " like '%" & TextoFiltro & "%'"
+			End If
+		End If
+	
+		'Agregar a filtro según haya o no otro filtro activo
+		If FiltroAct = "" Then 
+			FiltroAct = SQLParcial
+		Else
+			FiltroAct = FiltroAct & " and " & SQLParcial		
+		End If
+		
+		' Refrescar Datos
+		pnLista.Visible = False
+		iPosicion = 0
+		PonerCursor
+	
+		DibujarLista
+		
+		ProgressDialogHide
+End Sub
+
+Sub MeterFiltro(Campo As String, LongClick As Boolean)
+Dim bFiltroNum As Boolean
+Dim Tel As Phone
+Dim i As Int
+Dim temp, vSQL, temp1 As String
+
+	Log(">>>MeterFiltro: "&Campo)
+	
+	'Mostrar pantalla de selección de sentido (ASC DESC) -> bASC
+	pnLista.Enabled = False
+	bPulsado = False
+	
+	'Bandera para cancelar Ordenación
+	bSalirOrd = False
+
+	' Determinar tipo de campo a filtrar
+	If (Campo = "TITULO") OR (Campo = "AUTOR") OR (Campo = "SAGA") OR (Campo = "GENERO") OR (Campo = "IDIOMA") OR (Campo = "RESUMEN") OR (Campo = "FORMATO") Then
+		bFiltroNum = False
+	Else
+		bFiltroNum = True
+	End If
+	
+	ToastMessageShow("Introduce el contenido del campo a filtrar", False)
+	DoEvents
+	
+	If bFiltroNum Then
+		' Lanzar panel de filtro numérico
+		lbFiltroNum.Text = "Valor del filtro para " & Campo
+		edFiltroNum.Text = ""
+		pnFiltraNum.Visible = True
+		pnFiltraNum.BringToFront
+		edFiltroNum.RequestFocus
+	Else
+		' Texto
+		If (Campo = "GENERO" AND LongClick=False) OR (Campo = "FORMATO") Then
+			ToastMessageShow("Creando listado de opciones del campo "&Campo,False)
+			lvLabel.Text = Campo
+			pnListView.BringToFront
+			ListView1.SetSelection(0)
+			ListView1.Clear	
+			If CurTemp.IsInitialized Then CurTemp.Close	
+			temp = " having itemval is not null "
+			If FiltroAct.Trim <> "" Then
+			    temp = " having itemval is not null and "&FiltroAct
+			End If
+			'Msgbox(temp,FiltroAct)
+			If BDActual.IndexOf(".sqlite")>-1 Then 'Lipapa
+				vSQL = "select "&Campo&" as itemval, count(*) as vcount from Libros group by "&Campo&" "&temp&" order by 2 desc LIMIT 0, 300"
+			Else ' .db > calibre
+				temp = getFieldsLipapaToCalibre(FiltroAct)
+				If temp.Trim <> "" Then
+					temp = " where "&temp
+				End If
+'				If (Campo = "GENERO") Then
+				temp1=getGeneraCalibreSQLJoin(Campo&" "&FiltroAct)
+				vSQL =getFieldsLipapaToCalibre("Select "&Campo&" as itemval, count(*) as vcount from books "&temp1&" "&temp&" group by "&Campo&" having itemval is not null order by 2 desc LIMIT 0, 300")
+'				Else If (Campo = "FORMATO") Then
+'					vSQL = "Select data.format as itemval, count(*) as vcount  from books "&getGeneraCalibreSQLJoin(Campo&" "&FiltroAct)&" group by data.format "&temp&" order by 2 desc LIMIT 0, 300"
+'				End If
+			End If
+			
+			'Msgbox(vSQL,Campo&" "&FiltroAct)
+			CurTemp = BDLipapa.ExecQuery(vSQL)			
+			If CurTemp.RowCount>0 Then	
+				For i=0 To CurTemp.RowCount-1
+					CurTemp.Position = i
+					ListView1.AddSingleLine(CurTemp.GetString("itemval")& " ("&CurTemp.GetString("vcount")&")")
+				Next 
+				ListView1.AddSingleLine("")
+				ListView1.AddSingleLine("")
+				pnListView.Visible = True
+				ListView1.BringToFront
+				ListView1.RequestFocus
+				Return				
+			Else
+			   Msgbox("No hay ningún valor definido para el campo "&Campo,"")
+			   bPulsado=True
+			   bSalirOrd=True
+			End If			
+
+		Else		
+			lbFiltroCad.Text = "Texto del filtro para " & Campo
+			edFiltroCad.Text = ""
+			pnFiltraCad.Visible = True
+			pnFiltraCad.BringToFront
+			edFiltroCad.RequestFocus
+		End If
+	End If
+	
+	Do While Not(bPulsado)
+		DoEvents
+	Loop
+	
+	If Not(bSalirOrd) Then
+		DefinirFiltro(Campo, bFiltroNum)
+	End If
+	
+	'Ocultar teclado
+	Tel.Hidekeyboard(Activity)
+	
+	'Ocultar paneles de filtro
+	pnFiltraNum.Visible = False
+	pnFiltraCad.Visible = False
+	
+	pnLista.Visible = True
+	pnLista.Enabled = True
+	
+	pnListView.Visible = False
+	
+	bBloquear = False
+End Sub
+
+Sub Ordenar(Campo As String)
+	Log(">>>Ordenar "&Campo)
+	'Mostrar pantalla de selección de sentido (ASC DESC) -> bASC
+	bPulsado = False
+	
+	ToastMessageShow("Selecciona el sentido ascendente o descendente", True)
+	DoEvents
+	
+	' Lanzar panel de "sentido" de ordenacióin y esperar hasta que se pulse
+	pnOrdena.Visible = True
+	
+	'Bandera para cancelar Ordenación
+	lbOrdenCad.Text=Campo
+	bSalirOrd = False
+	pnOrdena.BringToFront
+	
+	Do While Not(bPulsado)
+		DoEvents
+	Loop
+	
+	pnOrdena.Visible = False
+	
+	If Not(bSalirOrd) Then
+		' Ordenando			
+		Activity.Title = "Ordenando. Espera..."
+		ProgressDialogShow("Ordenando. Espera...")
+		Wait(1) 'DoEvents
+		
+		'Poner orden
+		If bOrdenIni Then
+			' Primera ordenación: suprimimos la existente
+			OrdenAct = Campo
+			bOrdenIni = False
+		Else
+			' Ya hay otro campo para ordenar, puesto por el usuario
+			OrdenAct = OrdenAct & ", " & Campo
+		End If
+	
+		'Poner sentido
+		If Not(bAsc) Then 
+			OrdenAct = OrdenAct & " DESC"
+		End If
+	
+		'Caso especial: estrellas siempre va acompañado de votos
+		If Campo = "ESTRELLAS" Then
+			OrdenAct = OrdenAct & ", VOTOS DESC"
+		End If
+	
+		' Refrescar Datos
+		pnLista.Visible = False
+		iPosicion = 0
+		PonerCursor
+	
+		DibujarLista
+		ProgressDialogHide
+	End If
+	
+	pnLista.Visible = True
+	bBloquear = False
+End Sub
+
+Sub CambiarBase(Num As Int)
+Dim temp As String
+	
+		If Num = 0 AND False Then
+			'Poner BD Principal
+			If BDActual == "lipapa.sqlite" Then
+				ToastMessageShow("Esa BD ya estaba activada", True)
+				Activity.Title = Titulo & iNumRegistros & " LIBROS (" & GetBDTitleName(RutaBD&BDActual) &")"
+			Else 
+				Activity.Title = "Activando la BD Principal ("& GetBDTitleName(RutaBD&BDActual)&"). Espera..."	
+				ProgressDialogShow("Activando la BD Principal ("& GetBDTitleName(RutaBD&BDActual)&"). Espera...")
+				Wait(1) 'DoEvents
+				
+				'Cerrar BD Actual
+				CerrarBD
+				
+				'Abrir BD 1
+				AbrirBD
+			
+				'Redibujar
+				DibujarLista
+				ProgressDialogHide
+					
+				'BDActual = "lipapa.sqlite"
+				Botones(13).Bitmap=LoadBitmap(File.DirAssets, "BD1.bmp")
+			End If
+		Else
+			'Poner una de las otras 9 BDs
+			Log("BDActual: "&BDActual)
+			Log("Num: "&Num&"="&RutasBases(Num))
+			If RutasBases(Num)=RutaBD&BDActual AND False Then 'BDActual == RutasBases(Num-1) Then
+				ToastMessageShow("Esa BD ya estaba activada", True)
+				Activity.Title = Titulo & iNumRegistros & " LIBROS (" & GetBDTitleName(RutaBD&BDActual) &")"
+			Else If RutasBases(Num) = "" Then
+				ToastMessageShow("Esa BD no está asignada", True)
+				Activity.Title = Titulo & iNumRegistros & " LIBROS (" & GetBDTitleName(RutaBD&BDActual) &")"
+			Else 'If File.Exists(RutaBD, RutasBases(Num-1)) Then
+				temp = RutasBases(Num)
+				If temp.IndexOf("%")>-1 Then
+					temp = temp.SubString2(0,temp.IndexOf("%"))
+				End If
+				Activity.Title = "Activando la BD " &CStr(Num) & " (" & GetBDTitleName(temp) & "). Espera..."
+				ProgressDialogShow("Activando la BD " &CStr(Num) & " (" & GetBDTitleName(temp) & "). Espera...")
+				Wait(1) 'DoEvents
+				
+				'Cerrar BD Actual
+				CerrarBD
+				
+				'Abrir nueva BD
+				AbrirOtraBD(Num)
+			
+				'Redibujar
+				DibujarLista
+				
+				ProgressDialogHide
+					
+				Botones(13).Bitmap=LoadBitmap(File.DirAssets, "BD" &CStr(Num)&".bmp")
+'			Else
+'				ToastMessageShow("No logro encontrar esa base de datos", True)
+			End If
+		End If
+		
+	pnCambioBase.Visible = False
+	bBloquear = False
+	DoEvents
+End Sub
+
+Sub CambiarBase_Click
+Dim l As ImageView
+Dim Num As Int
+	
+		l = Sender
+		Num = l.Tag 'Botón de cambio de bd que se pulsó
+		CambiarBase(Num)
+End Sub
+
+Sub CambiarBase_LongClick
+Dim l As ImageView
+Dim Num As Int
+	 
+		l = Sender
+		Num = l.Tag 'Botón de cambio de bd que se pulsó		
+		btUpdate(Num).Visible=True
+		'FTPDBUpdate_go(RutasBases(Num))
+End Sub
+
+Sub BDsName_Click
+Dim l As Label
+Dim Num As Int
+	
+		l = Sender
+		Num = l.Tag 'Botón de cambio de bd que se pulsó
+		CambiarBase(Num)
+End Sub
+
+
+Sub Wait(Sekunden As Int)
+   Dim Ti As Long
+   Ti = DateTime.Now + (Sekunden * 1000)
+   Do While DateTime.Now < Ti
+      DoEvents
+   Loop
+End Sub
+
+Sub Boton_LongClick
+Dim l As ImageView
+Dim Num, i As Int
+Dim temp As String
+
+		l = Sender
+		Num = l.Tag
+		
+		LongClickPushed=True
+		
+		If Num=13 AND bFiltrar Then
+			ToastMessageShow("Creando el listado de opciones de filtros especiales...",True)
+			lvLabel.Text = "Filtros especiales"
+			pnListView.BringToFront
+			ListView1.SetSelection(0)
+			ListView1.Clear	
+			ListView1.AddSingleLine("FORMATO")
+			ListView1.AddSingleLine("Ver Filtro SQL")
+			If vremotetype="ftp" Then
+				ListView1.AddSingleLine("Bajar portadas pendientes")
+				'ListView1.AddSingleLine("Bajar ebooks pendientes")
+			End If			
+			If BDActual.IndexOf(".sqlite")=-1 Then
+				ListView1.AddSingleLine(">>Identificadores")			
+				If CurTemp.IsInitialized Then CurTemp.Close	
+				CurTemp = BDLipapa.ExecQuery("Select identifiers.type as itemval, count(*) as vcount from books left join identifiers on identifiers.book=books.id group by identifiers.type having itemval is not null order by 1 asc LIMIT 0, 300")
+				If CurTemp.RowCount>0 Then	
+					For i=0 To CurTemp.RowCount-1
+						CurTemp.Position = i
+						ListView1.AddSingleLine(" "&CurTemp.GetString("itemval")& " (Id/"&CurTemp.GetString("vcount")&")")
+					Next 
+				End If				
+			End If	
+			ListView1.AddSingleLine("")			
+			ListView1.AddSingleLine("")
+			pnListView.Visible = True
+			ListView1.BringToFront
+			ListView1.RequestFocus
+			Return				
+		Else
+			Boton_Click			
+		End If
+		
+		LongClickPushed=False
+End Sub
+
+Sub Boton_Click
+Dim l As ImageView
+Dim Num As Int
+Dim Resp As Int
+Dim Campos(9) As String
+Dim CamposF(9) As String
+	If Not(bBloquear) Then
+		'Bloquear minibotones
+		bBloquear = True
+		Campos = Array As String("TITULO", "AUTOR", "SAGA", "NUMERO", "EXPECTATIVA", "ESTRELLAS", "GENERO", "IDIOMA", "ANNOPUBLICACION")
+		CamposF = Array As String("TITULO", "AUTOR", "SAGA", "NUMERO", "EXPECTATIVA", "ESTRELLAS", "GENERO", "IDIOMA", "RESUMEN")
+		
+		l = Sender
+		Num = l.Tag
+		
+		Select Num
+			Case 0 'Limpiar ordenación o filtro			
+				If bFiltrar Then
+					' Filtrando
+					Activity.Title = "Poniendo filtro inicial. Espera..."
+					ProgressDialogShow("Poniendo filtro inicial. Espera...")
+					Wait(1) 'DoEvents
+					
+					LimpiarFiltro
+				Else
+					Activity.Title = "Poniendo ordenación inicial. Espera..."
+					ProgressDialogShow("Poniendo ordenación inicial. Espera...")
+					Wait(1) 'DoEvents
+					' Restaurar ordenación original
+					LimpiarOrdenacion
+				End If
+				
+				'Desbloquear botones
+				bBloquear = False
+				ProgressDialogHide
+				
+			Case 1 'Anterior
+				pnLista.Visible = False
+		
+				If iPosicion >= 8 Then
+					iPosicion = iPosicion - 8
+					DibujarLista
+				End If
+		
+				pnLista.Visible = True
+				
+				'Desbloquear botones
+				bBloquear = False
+				
+			Case 2 'Cambiar el estado de Filtrar / Ordenar	
+				bFiltrar = Not(bFiltrar)
+				
+				If bFiltrar Then
+					' Filtrando
+					ToastMessageShow("Modo búsqueda activado",False)
+					Botones(2).Bitmap=LoadBitmap(File.DirAssets, "filtrar2.bmp")
+					Botones(11).Bitmap=LoadBitmap(File.DirAssets, "resumen.bmp")
+				Else
+					' Ordenando
+					ToastMessageShow("Modo ordenación activado",False)
+					Botones(2).Bitmap=LoadBitmap(File.DirAssets, "boton2.bmp")
+					Botones(11).Bitmap=LoadBitmap(File.DirAssets, "boton11.bmp")
+				End If
+				
+						
+				'Desbloquear botones
+				bBloquear = False
+				
+			Case 3,4,5,6,7,8,9,10,11 'Ordenar / Filtrar
+				bBloquear = True	
+				
+				If bFiltrar Then
+					' Filtrando
+					MeterFiltro(CamposF(Num-3), LongClickPushed)
+				Else
+					'Ordenando
+					Ordenar(Campos(Num-3))
+				End If
+			
+			Case 12 'Siguiente
+				pnBotones.Enabled = False
+				pnLista.Visible = False
+		
+				If iPosicion < iNumRegistros - 8 Then
+					iPosicion = iPosicion + 8
+					DibujarLista
+				End If
+		
+				pnLista.Visible = True
+				pnBotones.Enabled = True
+				
+				'Desbloquear botones
+				bBloquear = False
+			
+			Case 13 'Conmutar de BD
+				bBloquear = True
+				
+				Activity.Title = "Selecciona la BD a activar"
+				'Preparar lista de bds y panel de cambio
+				If RutasBases(2)="" Then
+					PonerListaBDs	
+				End If								
+				pnCambioBase.Visible = True
+
+				DoEvents
+		End Select
+	End If
+End Sub
+
+'Devuelve la extensión de un fichero, o la cadena vacía
+Sub SacarExtension(Fichero As String) As String
+Dim I As Int
+Dim bEncontrado As Boolean
+Dim Resultado As String
+
+	'Nos posicionamos en el último caracter
+	I = Fichero.Length -1
+	bEncontrado = False
+	
+	Do Until (bEncontrado) OR (I<0)
+		If Fichero.CharAt(I) = "." Then
+			bEncontrado = True
+		Else
+			I = I - 1
+		End If	
+	Loop
+	
+	If bEncontrado Then 
+		Resultado=Fichero.SubString(I)
+	Else 
+		Resultado = ""
+	End If	
+	
+	Return Resultado
+End Sub
+
+Sub QuitarHuerfanos(RutaH As String)
+Dim I As Int
+Dim Fich As List
+Dim CurHuer As Cursor
+Dim Consulta As String
+Dim Cadena As String
+Dim Exten As String
+Dim FichABuscar As String
+	
+	'Recorrer ficheros
+	Activity.Title = "Buscando en " & RutaH
+	DoEvents
+
+	'Inicializar lista de ficheros en esa carpeta
+	Fich = File.ListFiles(RutaH)
+	
+	' Recorremos todos los archivos / carpetas de esa ruta
+	For I= 0 To Fich.Size - 1			
+		If File.IsDirectory(RutaH, Fich.Get(I)) Then
+			'Si es un directorio, llamada recursiva para recorrerlo
+			QuitarHuerfanos(RutaH&Fich.Get(I)&"/")
+		Else	
+			'Si es un fichero, buscar si existe su nombre en la bd.
+			Cadena = Fich.Get(I)
+			Cadena = Cadena.ToUpperCase
+			Exten = SacarExtension(Cadena)
+			If Exten = ".FB2" OR Exten = ".EPUB" OR Exten = ".ZIP" Then
+				' Borrar si no está
+				If ListaLibros.Get(Cadena) = Null Then
+					If File.Delete(RutaH, Fich.Get(I)) Then
+						' Incrementamos el contador de borrados
+						ContaHuerfanos = ContaHuerfanos + 1
+					End If
+				End If
+			End If
+		End If
+	Next
+End Sub
+
+
+'Eliminar los huérfanos. Creamos un mapa con los pares NUMERO / Nombre de fichero de la BD y
+'recorremos los ficheros eliminando los libros que no estén el la bd, buscardo primero por 
+'número y luego comparando por nombre de fichero
+Sub EliminarHuerfanos
+Dim CurLimpiar As Cursor
+Dim Fich As List
+Dim Cadena As String
+Dim I As Int
+
+	Activity.Title = "Preparando datos..."
+	DoEvents
+	
+	'Preparar cursor de búsqueda y volcar en la lista
+	If BDActual.IndexOf(".sqlite")>-1 Then 'Lipapa
+		CurLimpiar = BDLipapa.ExecQuery("select NUMERO, RUTAPAPYRE, '' as FORMATO from Libros order by NUMERO")
+	Else ' .db > calibre
+		CurLimpiar = BDLipapa.ExecQuery("Select books.id As NUMERO, books.Path || '/' || data.name || '.' || data.format as RUTAPAPYRE, (SELECT GROUP_CONCAT(data.format) FROM data where data.book=books.id GROUP BY data.book) as FORMATO from books left join data on books.id=data.book ")
+	End If
+	
+	ListaLibros.Initialize
+	ContaHuerfanos = 0
+	
+	For I = 0 To CurLimpiar.RowCount - 1 
+		CurLimpiar.Position = I
+		If Not(CurLimpiar.GetString("RUTAPAPYRE") = Null) Then
+			DescomponerRuta(CurLimpiar.GetString("RUTAPAPYRE")) 'Mete en GFichero el nombre de fichero
+			ListaLibros.Put(GFichero.ToUpperCase, CurLimpiar.GetInt("NUMERO"))	
+		End If
+	Next
+	
+	CurLimpiar.Close
+	
+	'Quitar Huérfanos (recursivo)
+	QuitarHuerfanos(Origen)
+	
+	ToastMessageShow("Eliminados "&ContaHuerfanos&" libros", True)
+	Activity.Title = Titulo & iNumRegistros & " LIBROS (" & GetBDTitleName(RutaBD&BDActual) &")"
+End Sub
+
+Sub InicializarLista
+Dim I As Int
+Dim X , Y As Int
+'Dim PortadaWidth, PortadaHeight, panelRigthWidth As Int
+
+
+	
+	pnLista.Initialize(Activity.Height)
+'	panelRigthWidth=(Activity.Width*58/600)
+'	PortadaWidth=Floor((Activity.Width - panelRigthWidth)/4)  '134
+'	PortadaHeight=Floor(PortadaWidth*216/134) '216+Floor((Activity.Width - panelRigthWidth)/4)-134
+	
+	Activity.AddView(pnLista, 0, 0, Activity.Width - panelRigthWidth, Activity.Height)
+	pnLista.Color = Colors.White
+	pnLista.Visible = False
+
+	For I = 0 To 7 
+	'PORTADAS
+		Portadas(I).Initialize("Portada")
+		
+		' Calcular Pos X,Y
+		If I < 4 Then
+			Y = 3
+		Else
+			Y = 26+PortadaHeight '242+Floor((Activity.Width - panelRigthWidth)/4)-134
+		End If 
+		
+		X = PortadaWidth * (I Mod 4) + 5
+		
+		
+		pnLista.AddView(Portadas(I), X, Y, PortadaWidth-2, PortadaHeight)
+		Portadas(I).Gravity = Gravity.Fill
+		
+	' ESTRELLAS
+		Estrellas(I).Initialize("")
+		pnLista.AddView(Estrellas(I), X, Y + 2+PortadaHeight, 80, 16) '80+PortadaWidth-134, 16+PortadaHeight-216)  ' 80, 16)
+		Estrellas(I).Gravity = Gravity.Fill
+		
+	' VOTOS
+		Votos(I).Initialize("")
+		pnLista.AddView(Votos(I), X + 132 - 40 - 1+PortadaWidth-134, Y + 2+PortadaHeight, 40+PortadaWidth-134, 16+PortadaHeight-216)
+		Votos(I).TextSize=TamTxt - 3
+		Votos(I).Color=Colors.White
+		Votos(I).TextColor = Colors.Black 
+		Votos(I).Gravity=Gravity.RIGHT
+		
+	' EPUBS
+		ePUBs(I).Initialize("")
+		pnLista.AddView(ePUBs(I), X+1, Y+1 , 24, 16)
+		ePUBs(I).Bitmap = LoadBitmap(File.DirAssets, "epub.bmp")
+		ePUBs(I).Gravity = Gravity.Fill
+		ePUBs(I).Visible = False
+		
+		fb2s(I).Initialize("")
+		pnLista.AddView(fb2s(I), X+1+(24*1), Y+1 , 24, 16)
+		fb2s(I).Bitmap = LoadBitmap(File.DirAssets, "fb2.bmp")
+		fb2s(I).Gravity = Gravity.Fill
+		fb2s(I).Visible = False		
+		
+		mobis(I).Initialize("")
+		pnLista.AddView(mobis(I), X+1+(24*2), Y+1 , 24, 16)
+		mobis(I).Bitmap = LoadBitmap(File.DirAssets, "mobi.bmp")
+		mobis(I).Gravity = Gravity.Fill
+		mobis(I).Visible = False
+		
+		pdfs(I).Initialize("")
+		pnLista.AddView(pdfs(I), X+1+(24*3), Y+1 , 24, 16)
+		pdfs(I).Bitmap = LoadBitmap(File.DirAssets, "pdf.bmp")
+		pdfs(I).Gravity = Gravity.Fill
+		pdfs(I).Visible = False		
+		
+	' NÚMERO DE LIBRO
+		'Numeros(i).Initialize("")
+		'pnLista.AddView(Numeros(i), X + 1, Y+1, 80, 16)
+		'Numeros(i).TextSize=TamTxt - 3
+		'Numeros(i).Gravity=Gravity.CENTER
+		'Numeros(i).Color = Colors.White
+		'Numeros(i).TextColor = Colors.Black 
+		'Numeros(i).BringToFront	
+		
+	' AÑO
+		'Annos(i).Initialize("")
+		'pnLista.AddView(Annos(i), X + 1,  Y+198, 40, 16)
+		'Annos(i).TextSize=TamTxt-3
+		'Annos(i).TextColor=Colors.Black
+		'Annos(i).Color = Colors.White
+		'Annos(i).Gravity=Gravity.CENTER
+		'Annos(i).BringToFront	
+		
+	' NÚMERO DE PÁGINAS
+		'Paginas(i).Initialize("")
+		'pnLista.AddView(Paginas(i), X + 1, Y+198, 60, 16) 
+		'Paginas(i).TextSize=TamTxt - 3
+		'Paginas(i).Gravity=Gravity.CENTER
+		'Paginas(i).Color = Colors.White
+		'Paginas(i).TextColor = Colors.Black 
+		'Paginas(i).BringToFront	
+		
+	' EXPECTATIVA
+		Expectativas(I).Initialize("")
+		pnLista.AddView(Expectativas(I), X + 102+PortadaWidth-134, Y+200+PortadaHeight-216, 30+PortadaWidth-134, 16+PortadaHeight-216)
+		Expectativas(I).TextSize=TamTxt-3
+		Expectativas(I).TextColor=Colors.White
+		Expectativas(I).Color = Colors.Black
+		Expectativas(I).Gravity=Gravity.CENTER
+		Expectativas(I).BringToFront
+	Next
+	
+	'Preparar panel de Ordenacion
+	InicializarPanelOrden
+	
+	'Preparar paneles de Filtro
+	InicializarPanelesFiltro
+	
+	'Poner ficha primer libro
+	InicializarFicha
+	
+	'Poner datos de portadas y primera ficha
+	DibujarLista
+	
+	pnLista.Visible = True
+End Sub
+
+Sub CStr(i As Int) As String
+  Return "" & i
+End Sub
+
+Sub SalirCB_Click
+	pnCambioBase.Visible = False
+	bBloquear = False
+	Activity.Title = Titulo & iNumRegistros & " LIBROS (" & GetBDTitleName(RutaBD&BDActual) &")"
+	DoEvents	
+End Sub
+
+Sub RenameFile(OriginalFileName As String, NewFileName As String) As Boolean
+   Dim Result As Int
+   Dim StdOut, StdErr As StringBuilder
+   StdOut.Initialize
+   StdErr.Initialize
+   Dim Ph As Phone
+   Result = Ph.Shell("mv " & OriginalFileName & " " & NewFileName, Null,  StdOut, StdErr)
+   If Result = 0 Then
+      Return True
+   Else
+      Return False
+   End If
+End Sub
+
+Sub FTP1_DownloadCompleted (ServerPath As String, Success As Boolean)
+Log(">>>FTP1_DownloadCompleted "& ServerPath)
+Dim A As Int
+Dim stemp, sdb, sdp As String
+	sdb=ServerPath.Replace("/metadata.db","")
+	sdb=sdb.SubString(sdb.LastIndexOf("/")+1)
+	Log("FTP1_DownloadCompleted: "&sdb&" - "&ServerPath)
+	
+    If Success = False Then Log(LastException.Message)
+
+	If Success Then
+		If ServerPath.Contains("metadata.db") Then 
+				For A=1 To 9 
+					stemp=btBaseDBName(A).Text
+					If stemp<>"" AND sdb.Contains(stemp) Then
+						Log("FTP1. Descargado! >>>"&RutaBD&RutasBases(A))
+						'Move metadata1.db a metadata.db
+						sdp=RutasBases(A)
+						sdp=RutasBases(A).SubString2(0,sdp.IndexOf("%"))							
+						
+						If File.Size(RutaBD,sdp.Replace("metadata.db","")&"metadata1.db")>0 Then
+							If Not(RenameFile(RutaBD&sdp.Replace("metadata.db","")&"metadata1.db", RutaBD&sdp.Replace("metadata.db","")&"metadata.db")) Then
+								Log("FTP1. copiando metadata1.db en metadata.db >>>"&RutaBD&RutasBases(A))
+								File.Copy(RutaBD,sdp.Replace("metadata.db","")&"metadata1.db",RutaBD,sdp.Replace("metadata.db","")&"metadata.db")
+								File.Delete(RutaBD,sdp.Replace("metadata.db","")&"metadata1.db")
+								'ToastMessageShow("Base de datos de biblioteca "&sdp.Replace("/metadata.db","")&" actualizada...",True)
+							End If
+							ProgressDialogHide
+							btUpdate(A).Visible=False
+						Else
+						 	ProgressDialogHide
+							btUpdate(A).Visible=False
+						End If		
+						If BDActual.Length=0 Then
+							AbrirOtraBD(A)
+						End If
+					End If
+				Next
+		End If
+	End If
+End Sub
+
+Sub FTP1_DownloadProgress (ServerPath As String, TotalDownloaded As Long, Total As Long)
+    Dim s As String
+	'ProgressDialogHide
+	If Total>0 Then
+		s=ServerPath.Replace("/metadata.db","")
+		s=s.SubString(s.LastIndexOf("/")).Replace("/","")	
+		s = "(" & s  & ") " & Round(TotalDownloaded / 1000)
+		s = s & " de " & Round(Total / 1000) & "KB"
+		ToastMessageShow("Actualizando la biblioteca "&s&" (tarda un poco)...",False)	
+	End If
+End Sub
+
+Sub FTP1_ListCompleted (ServerPath As String, Success As Boolean, Folders() As FTPEntry, Files() As FTPEntry)
+Log(">>>FTP1_ListCompleted "& ServerPath)
+Dim i, A As Int
+Dim stemp,sbd As String
+    If Success = False Then
+        Log("Error aquí: "&LastException)
+    Else
+        For i = 0 To Folders.Length - 1
+            Log(Folders(i).Name)
+        Next
+        For i = 0 To Files.Length - 1
+            Log(Files(i).Name & ", " & Files(i).Size & ", " & DateTime.Date(Files(i).Timestamp) & "..." & ServerPath)
+			If Files(i).Name.Contains("metadata.db") Then
+				For A=1 To 9 
+					stemp=btBaseDBName(A).Text
+					If stemp<>"" Then
+						If RutasBases(A).Contains("%") AND ServerPath.Contains(stemp) Then
+							Log("...."&stemp)
+							sbd=RutasBases(A)
+							sbd=RutasBases(A).SubString2(0,sbd.IndexOf("%"))		
+							sbd=sbd.Replace("metadata.db","")
+							Log("---Check update BD "&stemp&" local:"&File.Size(RutaBD,sbd&"metadata.db")&" cloud:"&Files(i).Size)
+							If (File.Size(RutaBD,sbd&"metadata.db")<>Files(i).Size) AND Files(i).Size>0 Then
+								btUpdate(A).Visible=True
+								'FTP1.DownLoadFile(vremotepath & "/" & "metadata.db" , False, RutaBD&sbd,"metadata1.db")		
+							End If
+						End If
+					End If
+				Next
+			End If
+        Next
+    End If
+End Sub
+
+Sub FTPMetadataList(dbline As String, NumeroBD As String)
+Dim  subs(), sdb As String
+	Log(">>>FTPMetadataList: "&dbline)
+	If dbline.Contains("%") Then
+		subs=Regex.Split("%",dbline)      
+		If subs.Length>1 Then
+			For x=1 To subs.Length -1
+			   If subs(x).ToLowerCase.IndexOf("type=")>-1 Then
+			   		vremotetype=subs(x).ToLowerCase.replace("type=","")
+			   End If
+			   If subs(x).ToLowerCase.IndexOf("host=")>-1 Then
+			   		vremotehost=subs(x).replace("host=","")
+			   End If
+			   If subs(x).ToLowerCase.IndexOf("user=")>-1 Then
+			   		vremoteuser=subs(x).replace("user=","")
+			   End If
+			   If subs(x).ToLowerCase.IndexOf("pass=")>-1 Then
+			   		vremotepass=subs(x).replace("pass=","")
+			   End If
+			   If subs(x).ToLowerCase.IndexOf("path=")>-1 Then
+			   		vremotepath=subs(x).replace("path=","")
+			   End If	   
+			Next
+			
+		End If
+
+		If Not(FTP1.IsInitialized) Then 
+			FTP1.Initialize("FTP1", vremotehost, 21, vremoteuser, vremotepass)
+			FTP1.PassiveMode = True
+		End If		
+
+		sbd=dbline
+		sbd=dbline.SubString2(0,sbd.IndexOf("%"))		
+		sbd=sbd.Replace("metadata.db","")
+
+		If Not(File.Exists(RutaBD&sbd,"metadata.db")) Then
+			btUpdate(NumeroBD).Visible=True
+			FTPDBUpdate_go(dbline)
+		Else
+			FTP1.List(vremotepath & "/" & "metadata.db")				
+		End If
+
+		
+		'FTP1.DownLoadFile(vremotepath & "/" & "metadata.db" , False, File.DirRootExternal & "/" & "metadata.db")	
+	End If
+End Sub
+
+Sub FTPDBUpdate_go(dbline As String)
+Dim subs(), sbd As String
+
+		sbd=dbline
+		sbd=dbline.SubString2(0,sbd.IndexOf("%"))		
+		sbd=sbd.Replace("metadata.db","")
+
+		Log("!!!CalibreFTPDBUpdate: "&dbline) 'RutasBases(num)
+		
+		ProgressDialogShow("Actualizando la biblioteca "&sbd&" (tarda un poco)...")
+
+		subs=Regex.Split("%",dbline)      
+		If subs.Length>1 Then
+			For x=1 To subs.Length -1
+			   If subs(x).ToLowerCase.IndexOf("type=")>-1 Then
+			   		vremotetype=subs(x).ToLowerCase.replace("type=","")
+			   End If
+			   If subs(x).ToLowerCase.IndexOf("host=")>-1 Then
+			   		vremotehost=subs(x).replace("host=","")
+			   End If
+			   If subs(x).ToLowerCase.IndexOf("user=")>-1 Then
+			   		vremoteuser=subs(x).replace("user=","")
+			   End If
+			   If subs(x).ToLowerCase.IndexOf("pass=")>-1 Then
+			   		vremotepass=subs(x).replace("pass=","")
+			   End If
+			   If subs(x).ToLowerCase.IndexOf("path=")>-1 Then
+			   		vremotepath=subs(x).replace("path=","")
+			   End If	   
+			Next
+		End If
+
+		If Not(FTP1.IsInitialized) Then 
+			FTP1.Initialize("FTP1", vremotehost, 21, vremoteuser, vremotepass)
+			FTP1.PassiveMode = True
+		End If			
+		
+		If Not(File.Exists(RutaBD,sbd)) OR Not(File.IsDirectory(RutaBD,sbd)) Then
+			File.MakeDir(RutaBD,sbd)
+		End If
+
+
+		If (File.Exists(RutaBD&sbd,"metadata.db")) OR True Then
+			FTP1.DownLoadFile(vremotepath & "/" & "metadata.db" , False, RutaBD&sbd,"metadata1.db")
+		Else
+			FTP1.DownLoadFile(vremotepath & "/" & "metadata.db" , False, RutaBD&sbd,"metadata.db")
+		End If
+		pnCambioBase.Visible = False
+		bBloquear = False
+		DoEvents	
+End Sub
+
+Sub CalibreFTPDBUpdate_Click
+Dim l As ImageView
+Dim Num As Int
+	
+		l = Sender
+		Num = l.Tag 'No BD a actualizar
+		btUpdate(Num).Visible=True
+		FTPDBUpdate_go(RutasBases(Num))
+End Sub
+
+Sub BDAdd_Click
+	ToastMessageShow("Función no implementada aún para agregar una nueva biblioteca",True)
+End Sub
+
+Sub InicializarCambioBase
+'Dim vftp As FTP_Auto
+
+	' Panel de Ordenación
+	pnCambioBase.Initialize("")
+	'pnLista.AddView(pnCambioBase, 8, 100, 528, 290)
+	If (4 + (10*(panelRigthWidth-4)))>Activity.Height Then
+		pnLista.AddView(pnCambioBase, 5%x, 5%y, 80%x, 80%y)
+	Else
+		pnLista.AddView(pnCambioBase, 5%x, 5%y, 80%x, (4 + (10*(panelRigthWidth-4))))
+	End If
+	pnCambioBase.Color = Colors.Black
+	pnCambioBase.Visible = False
+	
+	
+	'Botón Salir Ordenación
+	imSalirCB.Initialize("SalirCB")
+	'pnCambioBase.AddView(imSalirCB, 480, 16, 32, 32)
+	pnCambioBase.AddView(imSalirCB, (pnCambioBase.Width-(panelRigthWidth-11)), 2, panelRigthWidth-10, panelRigthWidth-10)
+	imSalirCB.Color = Colors.Black
+	imSalirCB.Gravity = Gravity.FILL
+	imSalirCB.Bitmap = LoadBitmap(File.DirAssets, "btCancelar.bmp")
+	
+	'Dibujamos los 10 botones, en dos filas
+	For I=1 To 9
+		'Botón I
+		'If Not(btBase(I).IsInitialized) Then
+			btBase(I).Initialize("CambiarBase")
+			'pnCambioBase.AddView(btBase(I), 49, (60*I)+40, 48, 48)
+			pnCambioBase.AddView(btBase(I), (panelRigthWidth-10)+2, 4 + (I*(panelRigthWidth-4)), panelRigthWidth-10, panelRigthWidth-10)
+			
+			btBaseDBName(I).Initialize("BDsName")
+			'pnCambioBase.AddView(btBaseDBName(I), 100, (60*I)+20, 60%x, 30+DifY) '354+DifX, 30+DifY)
+			
+			btUpdate(I).Initialize("CalibreFTPDBUpdate")
+			pnCambioBase.AddView(btUpdate(I), 4, 4 + (I*(panelRigthWidth-4)), panelRigthWidth-10, panelRigthWidth-10)
+			
+			btUpdate(I).Color = Colors.Black
+			btUpdate(I).Gravity = Gravity.FILL
+			btUpdate(I).Bitmap = LoadBitmap(File.DirAssets, "bdupdate.bmp")
+			btUpdate(I).Tag = I	
+			btUpdate(I).visible=False
+			
+			pnCambioBase.AddView(btBaseDBName(I), (panelRigthWidth-10)*2+6, 4 + (I*(panelRigthWidth-4)), 60%x, panelRigthWidth-10)
+						
+'			If I<5 Then
+'				pnCambioBase.AddView(btBase(I), (2*I +1)*48, 98, 48, 48)
+'			Else
+'				pnCambioBase.AddView(btBase(I), (2*(I-5) +1)*48, 194, 48, 48)
+'			End If
+			btBase(I).Color = Colors.Black
+			btBase(I).Gravity = Gravity.FILL
+			btBase(I).Bitmap = LoadBitmap(File.DirAssets, "BD"&CStr(I)&".bmp")
+			btBase(I).Tag = I
+			
+			btBaseDBName(I).Gravity = Gravity.FILL
+			btBaseDBName(I).Color = Colors.Transparent
+			btBaseDBName(I).TextColor = Colors.White
+			btBaseDBName(I).TextSize = TamTxt	
+			btBaseDBName(I).Tag = I
+			
+		'End If
+	Next
+	
+	btBDAdd.Initialize("BDAdd")
+	pnCambioBase.AddView(btBDAdd, (panelRigthWidth-10)+2, 4 + (9*(panelRigthWidth-4)), panelRigthWidth-10, panelRigthWidth-10)
+	btBDAdd.Color = Colors.Black
+	btBDAdd.Gravity = Gravity.FILL
+	btBDAdd.Bitmap = LoadBitmap(File.DirAssets, "bdadd.bmp")
+	btBDAdd.Tag = I	
+	'btBDAdd.visible=False	
+	
+End Sub
+
+Sub SetAppsinList(vfiltro As String)
+	Dim args(1) As Object	
+	Dim Obj1, Obj2, Obj3, Obj4 As Reflector
+	Dim size, i, flags, count As Int
+	Dim Types(1), msg, name, name1, vcomponent As String
+	
+	listAppsInt.Clear
+	
+	ListView1.SetSelection(0)
+	ListView1.Clear
+	
+	listAppsInt.Add("")
+	ListView1.AddSingleLine(">>> Aplicaciones instaladas")	
+
+	Obj1.Target = Obj1.GetContext
+	Obj1.Target = Obj1.RunMethod("getPackageManager") ' PackageManager
+	Obj2.Target = Obj1.RunMethod2("getInstalledPackages", 0, "java.lang.int") ' List<PackageInfo>
+	size = Obj2.RunMethod("size")
+	For i = 0 To size -1
+	  Obj3.Target = Obj2.RunMethod2("get", i, "java.lang.int") ' PackageInfo
+	  name = Obj3.GetField("packageName")
+	  
+	  Obj3.Target = Obj3.GetField("applicationInfo") ' ApplicationInfo      
+	  flags = Obj3.GetField("flags")   
+	   If Bit.AND(flags, 1)  = 0 Then
+	      args(0) = Obj3.Target
+	      Types(0) = "android.content.pm.ApplicationInfo" 
+	      name1 = Obj1.RunMethod4("getApplicationLabel", args, Types) 'resolveActivity getApplicationLabel
+		  
+		  If vfiltro.Trim <> "" Then	
+			If name.ToUpperCase.Contains(vfiltro.ToUpperCase) OR name.ToUpperCase.Contains("KINDLE") Then
+				ListView1.AddSingleLine(name1)
+				listAppsInt.Add(name)
+			End If
+		  Else
+		  	ListView1.AddSingleLine(name1)
+			listAppsInt.Add(name)
+		  End If		  
+
+		  
+	      'msg = msg & name1 & " : " & name & " - " & pm.GetVersionName(name)  & CRLF& CRLF
+	      count = count + 1
+	   End If      
+	  
+	Next   
+	ListView1.AddSingleLine("")
+	ListView1.AddSingleLine("")
+	listAppsInt.Add("")
+	listAppsInt.Add("")
+   
+   'inAct.SetComponent("org.coolreader/.CoolReader")
+   'Msgbox(msg,count) 
+End Sub
+
+Sub FRFTP_Click
+Dim myw As WebView
+
+	lvLabel.Text="Acción con ebook"
+	SetAppsinList("READER")
+	pnListView.Visible=True
+	pnListView.BringToFront
+
+'	"Aplicaciones instaladas"
+'	Dim In As Intent
+'	Dim pm As PackageManager
+'	In.Initialize(In.ACTION_VIEW, "file://")
+'	In=pm.GetApplicationIntent(name)
+'	If In.IsInitialized Then StartActivity(In)
+'		'StartActivity(In)
+'	End If
+  
+'  myw.Initialize("myw")
+'  Activity.AddView(myw, 0, 0, 100%x, 100%y) 'Your options for size here
+'  Msgbox("ftp://"&vremoteuser&":"&vremotepass&"@"&vremotehost&"/","")
+'  myw.LoadUrl("ftp://"&vremoteuser&":"&vremotepass&"@"&vremotehost&"/")
+End Sub
+
+Sub SalirFiltroRap_Click
+	'Habilitar botones y paneles
+	bBloquear = False
+	pnFiltroRap.Visible = False
+	pnLista.Enabled = True
+	pnFicha.Enabled = True
+End Sub
+
+Sub InicializarFiltroRap
+
+
+	'pnLista.AddView(pnCambioBase, 5%x, 5%y, 80%x, (4 + (10*(panelRigthWidth-4))))
+	'pnCambioBase.AddView(imSalirCB, (pnCambioBase.Width-(panelRigthWidth-11)), 2, panelRigthWidth-10, panelRigthWidth-10)
+	'pnCambioBase.AddView(btBase(I), 4, 4 + (I*(panelRigthWidth-4)), panelRigthWidth-10, panelRigthWidth-10)
+	'pnLista.AddView(pnOrdena, 5%x, 5%y, (8*(panelRigthWidth-4)), (4 + (3*(panelRigthWidth-4)))) '148, 150, 246, 158)	
+	
+	
+	' Panel de Filtro Rápido
+	pnFiltroRap.Initialize("")
+	pnLista.AddView(pnFiltroRap,  5%x, 5%y, 80%x, (5*(panelRigthWidth-4)))' 103, 100, 336, 280)
+	pnFiltroRap.Color = Colors.Black
+	pnFiltroRap.Visible = False
+	
+	'Botón Salir
+	imSalirFilRap.Initialize("SalirFiltroRap")
+	pnFiltroRap.AddView(imSalirFilRap,  (pnFiltroRap.Width-(panelRigthWidth-11)), 2, panelRigthWidth-10, panelRigthWidth-10)
+	imSalirFilRap.Color = Colors.Black
+	imSalirFilRap.Gravity = Gravity.FILL
+	imSalirFilRap.Bitmap = LoadBitmap(File.DirAssets, "btCancelar.bmp")
+	
+	'TITULO
+	imFRTitulo.Initialize("FRTitulo")
+	pnFiltroRap.AddView(imFRTitulo, (panelRigthWidth-10)*1+2, (panelRigthWidth-10), panelRigthWidth-10, panelRigthWidth-10)
+	imFRTitulo.Color = Colors.Black
+	imFRTitulo.Gravity = Gravity.FILL
+	imFRTitulo.Bitmap = LoadBitmap(File.DirAssets, "boton3.bmp")
+	
+	'AUTOR
+	imFRAutor.Initialize("FRAutor")
+	pnFiltroRap.AddView(imFRAutor, (panelRigthWidth-10)*3+2, (panelRigthWidth-10), panelRigthWidth-10, panelRigthWidth-10)
+	imFRAutor.Color = Colors.Black
+	imFRAutor.Gravity = Gravity.FILL
+	imFRAutor.Bitmap = LoadBitmap(File.DirAssets, "boton4.bmp")
+	
+	'SAGA
+	imFRSaga.Initialize("FRSaga")
+	pnFiltroRap.AddView(imFRSaga, (panelRigthWidth-10)*5+2, (panelRigthWidth-10), panelRigthWidth-10, panelRigthWidth-10)
+	imFRSaga.Color = Colors.Black
+	imFRSaga.Gravity = Gravity.FILL
+	imFRSaga.Bitmap = LoadBitmap(File.DirAssets, "boton5.bmp")
+	
+	
+	'TOSHARE (compartir libro)
+	imFRSaga.Initialize("FRShareit")
+	pnFiltroRap.AddView(imFRSaga, (panelRigthWidth-10)*7+2, (panelRigthWidth-10), panelRigthWidth-10, panelRigthWidth-10)
+	imFRSaga.Color = Colors.Black
+	imFRSaga.Gravity = Gravity.FILL
+	imFRSaga.Bitmap = LoadBitmap(File.DirAssets, "botonshare.bmp")	
+	
+	'--------------------------------------
+	
+	'GÉNERO
+	imFRGenero.Initialize("FRGenero")
+	pnFiltroRap.AddView(imFRGenero, (panelRigthWidth-10)*1+2, (panelRigthWidth-10)*3+2, panelRigthWidth-10, panelRigthWidth-10)
+	imFRGenero.Color = Colors.Black
+	imFRGenero.Gravity = Gravity.FILL
+	imFRGenero.Bitmap = LoadBitmap(File.DirAssets, "boton9.bmp")
+	
+	'IDIOMA
+	imFRIdioma.Initialize("FRIdioma")
+	pnFiltroRap.AddView(imFRIdioma, (panelRigthWidth-10)*3+2, (panelRigthWidth-10)*3+2, panelRigthWidth-10, panelRigthWidth-10)
+	imFRIdioma.Color = Colors.Black
+	imFRIdioma.Gravity = Gravity.FILL
+	imFRIdioma.Bitmap = LoadBitmap(File.DirAssets, "boton10.bmp")
+	
+	'BORRAR FILTRO
+	imFRBorrar.Initialize("FRBorrar")
+	pnFiltroRap.AddView(imFRBorrar, (panelRigthWidth-10)*5+2, (panelRigthWidth-10)*3+2, panelRigthWidth-10, panelRigthWidth-10)
+	imFRBorrar.Color = Colors.Black
+	imFRBorrar.Gravity = Gravity.FILL
+	imFRBorrar.Bitmap = LoadBitmap(File.DirAssets, "BorrarFiltro.bmp")
+	
+	'BORRAR FILTRO
+	imFRFTP.Initialize("FRFTP")
+	pnFiltroRap.AddView(imFRFTP, (panelRigthWidth-10)*7+2, (panelRigthWidth-10)*3+2, panelRigthWidth-10, panelRigthWidth-10)
+	imFRFTP.Color = Colors.Black
+	imFRFTP.Gravity = Gravity.FILL
+	imFRFTP.Bitmap = LoadBitmap(File.DirAssets, "bdadd.bmp")
+	imFRFTP.Visible=False
+	
+End Sub
+
+Sub InicializarHerramientas
+Dim OffX, OffY As Int
+
+	OffX = 0
+	OffY = 0
+	' Panel de Ordenación
+	pnTools.Initialize("")
+	pnFicha.AddView(pnTools, (pnFicha.Width-336)/2, (pnFicha.Height-240)/2, 336, 240)
+	pnTools.Color = Colors.Black
+	pnTools.Visible = False
+	
+	'Portadas Faltantes
+	imTPortadaF.Initialize("FRTitulo")
+	pnTools.AddView(imTPortadaF, OffX+48, OffY+48, 48, 48)
+	imTPortadaF.Color = Colors.Black
+	imTPortadaF.Gravity = Gravity.FILL
+	imTPortadaF.Bitmap = LoadBitmap(File.DirAssets, "boton3.bmp")
+	
+	'Libros Faltantes
+	imTLibroF.Initialize("FRAutor")
+	pnTools.AddView(imTLibroF, OffX+144, OffY+48, 48, 48)
+	imTLibroF.Color = Colors.Black
+	imTLibroF.Gravity = Gravity.FILL
+	imTLibroF.Bitmap = LoadBitmap(File.DirAssets, "boton4.bmp")
+	
+	'Portadas Huérfanas
+	imTPortadaH.Initialize("FRSaga")
+	pnTools.AddView(imTPortadaH, OffX+240, OffY+48, 48, 48)
+	imTPortadaH.Color = Colors.Black
+	imTPortadaH.Gravity = Gravity.FILL
+	imTPortadaH.Bitmap = LoadBitmap(File.DirAssets, "boton5.bmp")
+	
+	'Libros Huérfanos
+	imTLibroH.Initialize("FRGenero")
+	pnTools.AddView(imTLibroH, OffX+48, OffY+144, 48, 48)
+	imTLibroH.Color = Colors.Black
+	imTLibroH.Gravity = Gravity.FILL
+	imTLibroH.Bitmap = LoadBitmap(File.DirAssets, "boton9.bmp")
+	
+	'IDIOMA
+	'imFRIdioma.Initialize("FRIdioma")
+	'pnTools.AddView(imFRIdioma, OffX+144, OffY+144, 48, 48)
+	'imFRIdioma.Color = Colors.Black
+	'imFRIdioma.Gravity = Gravity.FILL
+	'imFRIdioma.Bitmap = LoadBitmap(File.DirAssets, "boton10.bmp")
+	
+	'Salir
+	imTSalir.Initialize("FRBorrar")
+	pnTools.AddView(imTSalir, OffX+240, OffY+144, 48, 48)
+	imTSalir.Color = Colors.Black
+	imTSalir.Gravity = Gravity.FILL
+	imTSalir.Bitmap = LoadBitmap(File.DirAssets, "BorrarFiltro.bmp")
+End Sub
+
+
+Sub InicializarFicha
+Dim pnAuxi As Panel
+Dim FichaYSize As Int
+
+' Inicializar panel de Ficha
+	pnFicha.Initialize("VerLibro")
+	pnLista.AddView(pnFicha, 0, PortadaHeight*2+46, pnLista.Width, Activity.Height - PortadaHeight*2+46)  '478
+	
+	FichaYSize=78+DifY
+	If FichaYSize<(2*(panelRigthWidth-4))+2 Then
+		FichaYSize=(2*(panelRigthWidth-4))+2
+	End If
+	
+	CanvasFicha.Initialize(pnFicha)
+	CanvasFicha.DrawLine(24, 2, Activity.Width-(panelRigthWidth+30), 2, Colors.Black, 1dip)	'514
+	
+	'pnLista.AddView(pnCambioBase, 5%x, 5%y, 80%x, (4 + (10*(panelRigthWidth-4))))
+	'pnCambioBase.AddView(imSalirCB, (pnCambioBase.Width-(panelRigthWidth-11)), 2, panelRigthWidth-10, panelRigthWidth-10)
+	'pnCambioBase.AddView(btBase(I), 4, 4 + (I*(panelRigthWidth-4)), panelRigthWidth-10, panelRigthWidth-10)
+	'pnLista.AddView(pnOrdena, 5%x, 5%y, (8*(panelRigthWidth-4)), (4 + (3*(panelRigthWidth-4)))) '148, 150, 246, 158)	
+	
+	
+'IMAGEN Abrir libro
+	imAbrirLibro.Initialize("VerLibro")
+'	pnFicha.AddView(imAbrirLibro, pnFicha.Width-(76+DifY)-5, 5,76+DifY-3,76+DifY-3)'PortadaHeight*2+38, 7, 98, 68) ' 440, 7, 98, 68)
+	pnFicha.AddView(imAbrirLibro, pnFicha.Width-(2*(panelRigthWidth-4)), 5,(2*(panelRigthWidth-4)),(2*(panelRigthWidth-4)))'PortadaHeight*2+38, 7, 98, 68) ' 440, 7, 98, 68)
+	imAbrirLibro.Gravity = Gravity.Fill
+	imAbrirLibro.Bitmap = LoadBitmap(File.DirAssets, "abrirlibropeq.bmp")
+	
+	If True Then
+	'TÍTULO Y SAGA	
+		dtTitulo.Initialize("VerLibro")
+		pnFicha.AddView(dtTitulo, 4, 2, Activity.Width-(2*(panelRigthWidth-4)+2), FichaYSize) ' 4, 4, 534, 20)
+		dtTitulo.Gravity = Gravity.CENTER
+		dtTitulo.Color = Colors.Transparent
+		dtTitulo.TextColor = Colors.Black
+		dtTitulo.TextSize = TamTxt
+	End If
+	
+	CanvasFicha.DrawLine(24, FichaYSize-2, Activity.Width-(panelRigthWidth+26), FichaYSize-2, Colors.Black, 1dip) '518
+	
+' RESUMEN	
+	svResumen.Initialize(1200)
+	pnFicha.AddView(svResumen, 4, FichaYSize,Activity.Width-(panelRigthWidth+10), pnFicha.Height - 80) '534
+	svResumen.Visible = True
+	svResumen.Color = Colors.White
+	pnAuxi = svResumen.Panel
+	pnAuxi.Color = Colors.White
+	pnAuxi.Width = pnFicha.Width
+	
+	dtResumen.Initialize("")
+	pnAuxi.AddView(dtResumen, 2, 2, Activity.Width-(panelRigthWidth+14), pnAuxi.Height - 4) '530
+	dtResumen.Gravity = Gravity.LEFT 
+	dtResumen.Color = Colors.White
+	dtResumen.TextColor = Colors.Black
+	dtResumen.TextSize = TamTxt-1	
+	
+' Etiqueta para scroll hacia arriba
+	lbSubir.Initialize("DesplazarResumenArriba")
+	pnAuxi.AddView(lbSubir, 0,0,pnFicha.Width/2, pnAuxi.Height)
+	lbSubir.Text = "  "
+	lbSubir.Color = Colors.Transparent
+	lbSubir.Gravity = Gravity.CENTER
+	lbSubir.BringToFront 
+	
+' Etiqueta para scroll hacia abajo
+	lbBajar.Initialize("DesplazarResumen")
+	pnAuxi.AddView(lbBajar, pnFicha.Width/2,0,pnFicha.Width/2, pnAuxi.Height)
+	lbBajar.Text = "  "
+	lbBajar.Color = Colors.Transparent
+	lbBajar.Gravity = Gravity.CENTER
+	lbBajar.BringToFront 	
+	
+	'pnFicha.Invalidate
+	
+	imAbrirLibro.SendToBack 
+	
+	'Inicializar panel de filtro rápido
+	InicializarFiltroRap
+End Sub
+
+Sub DesplazarResumen_Click
+	If svResumen.ScrollPosition < svResumen.Panel.Height - (pnFicha.Height - 80) Then
+		svResumen.ScrollPosition = svResumen.ScrollPosition + pnFicha.Height - 110
+	End If
+End Sub
+
+Sub DesplazarResumenArriba_Click
+	If svResumen.ScrollPosition > (pnFicha.Height - 80) Then
+		svResumen.ScrollPosition = svResumen.ScrollPosition - (pnFicha.Height - 50)
+	Else
+		svResumen.ScrollPosition = 0
+	End If
+End Sub
+Sub Procesa_Libro(tipo As Int, vEbookFormat As String) 
+
+	'Msgbox(Activity.Height,"Altura: "& (15*(panelRigthWidth)) )
+
+	Log(">>>Procesa_Libro: "&tipo&" ... "&BDActual)
+	Dim vEbookName, vRutaCalibreLib As String	
+	Dim i, v As Int
+	vUltimoTipoClic=tipo  'Usando tras concluir la descarga de libro por ftp para saber como abrirlo en DownloadCompleted
+	vUltimoFormatClic=vEbookFormat 'Usando tras concluir la descarga de libro por ftp para saber como abrirlo en DownloadCompleted
+	'tipo=1,2 coolreader
+	'tipo=9   shareit
+	'tipo=5   abrir con una aplicación instalada
+
+	If Not(bBloquear) OR tipo=9 OR tipo=5 Then
+		If iNumRegistros > 0 Then
+			vEbookName=CurLibros.GetString("RUTAPAPYRE")			
+			vEbookName=vEbookName.Replace(".EPUB",".epub").Replace(".FB2",".fb2").Replace(".MOBI",".mobi").Replace(".PDF",".pdf")
+			vEbookFormat=vEbookFormat.ToLowerCase
+			If vEbookFormat.Trim <>"" Then
+				v=vEbookName.LastIndexOf(".")
+				If v>0 Then						
+					vEbookName=vEbookName.SubString2(0, v)
+				End If	
+				vEbookName=vEbookName&"."&vEbookFormat
+			End If		
+			
+			If vremotetype="ftp"  Then
+				If vEbookName.LastIndexOf("/")>0 Then
+					vEbookName=vEbookName.SubString(vEbookName.LastIndexOf("/"))
+				End If
+				
+				If File.Exists(Destino, vEbookName) Then
+					If tipo=9 Then
+						ToastMessageShow("Compartiendo libro. Espera...", True)
+					Else
+						ToastMessageShow("Abriendo libro. Espera...", True)
+					End If
+					AbrirLibro(Destino & "/" & vEbookName, tipo)				
+				Else
+					If Not(FTP.IsInitialized) Then 
+						FTP.Initialize("FTP", vremotehost, 21, vremoteuser, vremotepass)
+						FTP.PassiveMode = True
+					End If	
+
+					If File.Exists(File.DirRootExternal & "/", vEbookName) Then
+						File.Delete(File.DirRootExternal & "/", vEbookName)
+					End If
+				
+					vRutaCalibreLib=vremotepath & "/" & CurLibros.GetString("RUTAEBOOK") & "/" & vEbookName '"/public/lipapaebooks/Calibre Library/" & BDActual.Replace("metadata.db","")
+					vRutaCalibreLib=vRutaCalibreLib.Replace("//","/")
+					Log("Ebook ftp://" & vremoteuser&":"&vremotepass&"@"&vremotehost&vRutaCalibreLib)
+					'If Not(File.Exists(Destino))
+					FTP.DownLoadFile(vRutaCalibreLib , False, Destino, vEbookName)
+				End If
+			Else
+				If tipo=9 Then
+					ToastMessageShow("Compartiendo libro. Espera...", True)
+				Else
+					ToastMessageShow("Abriendo libro. Espera...", True)
+				End If
+				Log("ShareIt/CR: "&vEbookName)
+				AbrirLibro(vEbookName, tipo)
+			End If	
+		End If
+	End If
+End Sub
+
+
+Sub SelecFormat(tipo As Int)
+	Dim vEbookFormat As String
+	Dim vformats(12) As String
+	
+	vUltimoTipoClic=tipo
+	
+	vEbookFormat=CurLibros.GetString("FORMATO")				
+	If vEbookFormat.Contains(",") Then
+		lvLabel.Text = "Formatos disponibles"
+		vformats = Regex.split(",", vEbookFormat)
+		pnListView.BringToFront
+		ListView1.SetSelection(0)
+		ListView1.Clear	
+		For i=0 To vformats.Length-1
+			ListView1.AddSingleLine(vformats(i))
+		Next 
+		ListView1.AddSingleLine("")
+		ListView1.AddSingleLine("")
+		pnListView.Visible = True
+		ListView1.BringToFront
+		ListView1.RequestFocus	
+	Else
+		Procesa_Libro(tipo,"")
+	End If
+End Sub
+
+Sub VerLibro_Click		
+	SelecFormat(1)
+End Sub
+
+Sub VerLibro_LongClick
+	SelecFormat(2)
+End Sub
+
+
+Sub BorrarFicha
+Dim bitPortada, bitEstrellas As Bitmap
+Dim Numero, Estre As Int
+Dim FichEst As String
+
+'TÍTULO Y SAGA	
+	dtTitulo.Text = ""
+
+If False Then
+	' NÚMERO
+		dtNumero.Text = ""
+		
+	' AUTOR - GÉNERO - AÑO	
+		dtGenero.Text = "NO HAY NINGÚN LIBRO QUE MOSTRAR"
+		
+	' IDIOMA - FORMATO
+		dtIdioma.Text = ""
+		
+	' L F A D
+		dtFlags.Text = ""
+End If		
+
+' RESUMEN	
+	dtResumen.Text = ""
+End Sub
+
+Sub DibujarFicha(NumReg As Int)
+Dim bitPortada, bitEstrellas As Bitmap
+Dim Numero, Estre As Int
+Dim FichEst, vval As String
+
+	'Posicionarse
+	CurLibros.Position = NumReg-iSQLPosInit
+	pnFicha.Visible = False
+	svResumen.ScrollPosition = 0
+		
+	' Preparar estrellas
+	'Estre = CurLibros.GetInt("ESTRELLAS")
+		
+	'If Estre = 500 Then 
+	'	FichEst = "500.bmp"
+	'Else If Estre >= 450 Then 
+	'	FichEst = "450.bmp"
+	'Else If Estre >= 400 Then 
+	'	FichEst = "400.bmp"
+	'Else If Estre >= 350 Then 
+	'	FichEst = "350.bmp"
+	'Else If Estre >= 300 Then 
+	'	FichEst = "300.bmp"
+	'Else If Estre >= 250 Then 
+	'	FichEst = "250.bmp"
+	'Else If Estre >= 200 Then 
+	'	FichEst = "200.bmp"
+	'Else If Estre >= 150 Then 
+	'	FichEst = "150.bmp"
+	'Else If Estre >= 100 Then 
+	'	FichEst = "100.bmp"
+	'Else If Estre >= 50 Then 
+	'	FichEst = "50.bmp"
+	'Else 
+	'	FichEst = "0.bmp"
+	'End If
+	
+	'bitEstrellas.Initialize(File.DirAssets, FichEst)
+
+	
+'TÍTULO Y SAGA	
+	If Not(CurLibros.GetString("SAGA") = Null) AND Not(CurLibros.GetString("SAGA") = "") Then
+		dtTitulo.Text = "(" & CurLibros.GetString("SAGA") & ") " & CurLibros.GetString("TITULO").ToUpperCase
+	Else
+		dtTitulo.Text = CurLibros.GetString("TITULO").ToUpperCase
+	End If
+	If dtTitulo.Text.Length>100 Then
+		dtTitulo.Text=dtTitulo.Text.SubString2(0,100) & "..."
+	End If
+	
+	If True Then
+		
+		' AUTOR - GÉNERO - AÑO	
+			vval = CurLibros.GetString("AUTOR")
+			If Not(CurLibros.GetString("GENERO") = Null) AND Not(CurLibros.GetString("GENERO") = "") Then
+				vval = vval & " [" & CurLibros.GetString("GENERO") & "]"
+			End If
+'			If vval.Length>45 Then
+'				vval=vval.SubString2(0,45) & "..."
+'			End If	
+			dtTitulo.Text = dtTitulo.Text &CRLF&vval& " - " & CurLibros.GetInt("ANNOPUBLICACION")
+			
+				
+		' ESTRELLAS	
+			'dtEstrellas.Bitmap=bitEstrellas 
+
+		' VOTOS
+			'If CurLibros.GetInt("VOTOS") > 0 Then
+			'	dtVotos.Text="V:" & CurLibros.GetInt("VOTOS")
+			'Else
+			'	dtVotos.Text=""
+			'End If
+			
+		' NUMERO
+			dtTitulo.Text = dtTitulo.Text &CRLF&"["&CurLibros.GetInt("NUMERO")&"]"
+		' IDIOMA - FORMATO
+			vval = " "
+			If Not(CurLibros.GetString("IDIOMA") = Null) AND Not(CurLibros.GetString("IDIOMA") = "") Then
+				vval = vval &CurLibros.GetString("IDIOMA") 
+			End If
+			If CurLibros.GetInt("NUMLETRAS") > 0 Then
+				vval = vval & " - " & CurLibros.GetString("NUMLETRAS")&"p"
+			End If
+			If CurLibros.GetInt("EXPECTATIVA") > 0 Then
+				vval = vval & " - E:" & CurLibros.GetInt("EXPECTATIVA")
+			End If	
+			dtTitulo.Text = dtTitulo.Text &vval
+			
+		' L F A D
+			vval = " "
+			If CurLibros.GetInt("LEIDO") = 1 Then
+				vval = vval & "L "
+			End If
+			If CurLibros.GetInt("FAVORITOS") = 1 Then
+				vval = vval & "F "
+			End If
+			If CurLibros.GetInt("ABANDONADO") = 1 Then
+				vval = vval & "A "
+			End If
+			If CurLibros.GetInt("DESCARTABLE") = 1 Then
+				vval = vval & "D "
+			End If	
+			dtTitulo.Text = dtTitulo.Text &vval
+	Else
+	' AUTOR - GÉNERO - AÑO	
+		dtGenero.Text = CurLibros.GetString("AUTOR")
+		If Not(CurLibros.GetString("GENERO") = Null) AND Not(CurLibros.GetString("GENERO") = "") Then
+			dtGenero.Text = dtGenero.Text & " [" & CurLibros.GetString("GENERO") & "]"
+		End If
+		If dtGenero.Text.Length>45 Then
+			dtGenero.Text=dtGenero.Text.SubString2(0,45) & "..."
+		End If	
+		dtGenero.Text = dtGenero.Text & " - " & CurLibros.GetInt("ANNOPUBLICACION")
+		
+			
+	' ESTRELLAS	
+		'dtEstrellas.Bitmap=bitEstrellas 
+
+	' VOTOS
+		'If CurLibros.GetInt("VOTOS") > 0 Then
+		'	dtVotos.Text="V:" & CurLibros.GetInt("VOTOS")
+		'Else
+		'	dtVotos.Text=""
+		'End If
+		
+	' NUMERO
+		dtNumero.Text = "["&CurLibros.GetInt("NUMERO")&"]"
+	' IDIOMA - FORMATO
+		dtIdioma.Text = " "
+		If Not(CurLibros.GetString("IDIOMA") = Null) AND Not(CurLibros.GetString("IDIOMA") = "") Then
+			dtIdioma.Text = CurLibros.GetString("IDIOMA") 
+		End If
+		If CurLibros.GetInt("NUMLETRAS") > 0 Then
+			dtIdioma.Text = dtIdioma.Text & " - " & CurLibros.GetString("NUMLETRAS")&"p"
+		End If
+		If CurLibros.GetInt("EXPECTATIVA") > 0 Then
+			dtIdioma.Text = dtIdioma.Text & " - E:" & CurLibros.GetInt("EXPECTATIVA")
+		End If	
+		
+	' L F A D
+		dtFlags.Text = ""
+		If CurLibros.GetInt("LEIDO") = 1 Then
+			dtFlags.Text = dtFlags.Text & "L "
+		End If
+		If CurLibros.GetInt("FAVORITOS") = 1 Then
+			dtFlags.Text = dtFlags.Text & "F "
+		End If
+		If CurLibros.GetInt("ABANDONADO") = 1 Then
+			dtFlags.Text = dtFlags.Text & "A "
+		End If
+		If CurLibros.GetInt("DESCARTABLE") = 1 Then
+			dtFlags.Text = dtFlags.Text & "D "
+		End If	
+	End If
+	
+' RESUMEN
+	If Not(CurLibros.GetString("RESUMEN") = Null) Then
+		dtResumen.Text = CurLibros.GetString("RESUMEN")
+		dtResumen.Text = striptags(dtResumen.Text)
+		dtResumen.Text = dtResumen.Text.Replace(CRLF&CRLF ,CRLF ).Replace("&quot;"," ").Replace("&nbsp;"," ")
+		dtResumen.Text = dtResumen.Text.Replace("&amp;" ,"&").Replace("&lt;","«").Replace("&gt;","»")		
+		dtResumen.Text = dtResumen.Text.Replace("  "," ")
+		dtResumen.Text = dtResumen.Text &CRLF &CRLF& CRLF& CRLF& CRLF
+	Else
+		dtResumen.Text = ""
+	End If
+	
+	pnFicha.Visible = True
+End Sub
+
+'http://www.basic4ppc.com/android/forum/threads/regex-and-replace.15677/
+Sub striptags(t As String)
+Dim subs() As String
+Dim x As Int 
+subs=Regex.Split(">",t)      
+t=""
+For x=0 To subs.Length -1
+   If subs(x).IndexOf("<")>-1 Then
+      t=t & subs(x).SubString2(0,subs(x).IndexOf("<")) & " "
+   Else 
+      t=t & subs(x)
+   End If
+Next
+Return t
+End Sub
+
+Sub DibujarLista
+Dim I As Int
+	Log(">>>DibujarLista ")
+	' Dibujar 8 portadas y datos, si hay
+	
+	If (iPosicion > iSQLPosInit+iSQLPosCount-9) OR ((iPosicion < iSQLPosInit+9) AND (iSQLPosInit>0)) Then
+		iSQLPosInit = iPosicion-Floor(iSQLPosCount/3)
+		If iSQLPosInit<0 Then
+			iSQLPosInit=0
+		End If
+		Activity.Title = "Actualizando consulta a la BD. Espera..."
+		ProgressDialogShow("Actualizando consulta a la BD. Espera...")
+		Wait(1) 'DoEvents
+		PonerCursor
+		ProgressDialogHide
+	End If
+	If (TaskInSecond="") Then
+		If iNumRegistros>0 Then
+			If iPosicion+8>iNumRegistros Then
+				ToastMessageShow("Libros: " & (iPosicion+1) & " - " & (iNumRegistros), True)
+			Else
+				ToastMessageShow("Libros: " & (iPosicion+1) & " - " & (iPosicion+8), True)
+			End If
+		End If
+	End If
+
+	For I=0 To 7
+		RutaCalibrePortada(I)="zzzzzzzppppppp"
+		' Si no hay más para mostrar
+		If iPosicion + I >= iNumRegistros Then
+			BorrarPortada(I)
+		Else
+			DibujarPortada(I, iPosicion+ I)
+		End If
+		If TaskInSecond="CheckAndDownloadEbooks" Then
+		
+		End If
+	Next
+
+	DoEvents
+			
+	If iNumRegistros > 0 Then
+		DibujarFicha(Portadas(0).Tag)
+	Else
+		BorrarFicha
+	End If
+End Sub
+
+Sub Portada_Click
+Dim l As ImageView
+Dim Num As Int
+	If Not(bBloquear) Then	
+		l = Sender
+		Num = l.Tag
+		
+		DibujarFicha(l.Tag)
+	End If
+End Sub
+
+Sub FRBorrar_Click
+	If bBorrarFiltroRap Then
+		imFRBorrar.Bitmap = LoadBitmap(File.DirAssets, "BorrarFiltro.bmp")
+	Else
+		imFRBorrar.Bitmap = LoadBitmap(File.DirAssets, "BorrarFiltro2.bmp")
+	End If
+	
+	bBorrarFiltroRap = Not(bBorrarFiltroRap)
+End Sub
+
+Sub FRAutor_Click
+	PonerFiltroRap("AUTOR")
+End Sub
+
+Sub FRTitulo_Click
+	PonerFiltroRap("TITULO")
+End Sub
+
+Sub FRSaga_Click
+	PonerFiltroRap("SAGA")
+End Sub
+
+Sub FRShareit_Click
+	pnFiltroRap.Visible = False
+	pnLista.Enabled = True
+	bBloquear=True
+	SelecFormat(9) 'Procesa_Libro(9,"")  'Localiza el libro y lo comparte como shareit
+	bBloquear=False
+End Sub
+
+Sub FRGenero_Click
+	PonerFiltroRap("GENERO")
+End Sub
+
+Sub FRIdioma_Click
+	PonerFiltroRap("IDIOMA")
+End Sub
+
+Sub PonerFiltroRap(Campo As String)
+Dim Valor, SQLParcial As String
+Dim I As Int	
+
+	Log(">>>PonerFiltroRap "&Campo)
+	'Sólo se interviene si el campo elegido tiene valor
+	If Not(CurLibros.GetString(Campo)=Null) Then
+		Valor = CurLibros.GetString(Campo).Trim
+		
+		If Valor.CompareTo("") > 0 Then
+			'Limpiar filtro si así se indicó
+			If bBorrarFiltroRap Then
+				FiltroAct = FiltroIni
+			End If
+			
+			
+			'SAGA -> CASO ESPECIAL -> ELIMINAR NÚMEROS 
+			If Campo = "SAGA" Then
+				I = Valor.Length - 1
+				
+				Do While I > 0
+					If (Valor.CharAt(I)=" ") Then 
+						Exit
+					Else
+						I = I - 1
+					End If					
+				Loop
+				
+				Valor = Valor.SubString2(0, I).Trim
+			End If
+			
+			SQLParcial = Campo & " like '%" & Valor & "%'"
+	
+			'Agregar a filtro según haya o no otro filtro activo
+			If FiltroAct = "" Then 
+				FiltroAct = SQLParcial
+			Else
+				FiltroAct = FiltroAct & " and " & SQLParcial		
+			End If
+				
+			' Refrescar Datos
+			pnLista.Visible = False
+			iPosicion = 0
+			PonerCursor
+			
+			DibujarLista
+			pnLista.Visible = True
+		End If
+	End If
+	
+	'Habilitar botones y paneles
+	bBloquear = False
+	pnFiltroRap.Visible = False
+	pnLista.Enabled = True
+End Sub
+
+Sub Portada_LongClick
+Dim l As ImageView
+Dim Num As Int
+	If Not(bBloquear) Then	
+		bBloquear = True
+		pnLista.Enabled = False
+		pnFicha.Enabled = False
+		
+		l = Sender
+		Num = l.Tag
+		
+		DibujarFicha(l.Tag)
+		
+		'Poner marca y botón de no borrar filtro
+		bBorrarFiltroRap = False
+		imFRBorrar.Bitmap = LoadBitmap(File.DirAssets, "BorrarFiltro.bmp")
+			
+		'Mostrar panel de botones
+		pnFiltroRap.Visible = True
+		pnFiltroRap.BringToFront
+	End If
+End Sub
+
+Sub FichaPortada_Click
+Dim rc As String
+Dim l As ImageView
+	If Not(bBloquear) Then
+		l = Sender
+		rc = l.Tag
+		AbrirLibro(rc, 1)
+	End If
+End Sub
+
+Sub FichaPortada_LongClick
+Dim rc As String
+Dim l As ImageView
+	If Not(bBloquear) Then
+		l = Sender
+		rc = l.Tag
+		AbrirLibro(rc, 0)
+	End If
+End Sub
+
+Sub Redibujar
+	Try
+		' Cerrar cursor
+		CurLibros.Close
+		
+		If BDActual.IndexOf(".sqlite")>-1 Then 'Lipapa
+			If iPosicion=0 Then
+				CurLibros = BDLipapa.ExecQuery("select count(*) from Libros " & Sel2)
+				CurLibros.Position = 0
+				iNumRegistros = CurLibros.GetInt2(0)
+				CurLibros.Close
+			End If
+		Else ' .db > calibre
+			If iPosicion=0 Then
+				CurLibros = BDLipapa.ExecQuery("select count(*) from books " & Sel2)
+				CurLibros.Position = 0
+				iNumRegistros = CurLibros.GetInt2(0)
+				CurLibros.Close	
+			End If
+		End If
+
+	
+		' Poner nuevo select
+		CurLibros = BDLipapa.ExecQuery(Sel1 & Sel2 & Sel3)
+		
+		' Calcular número de registros
+		'iNumRegistros = CurLibros.RowCount
+		Activity.Title = Titulo & iNumRegistros & " LIBROS (" & GetBDTitleName(RutaBD&BDActual) &")"
+		iPosicion = 0
+			
+		' Eliminar ScrollView actual
+		DibujarLista
+	Catch
+		Log(LastException.Message)
+	End Try
+End Sub
+
+Sub imInputText_Click
+	DoEvents
+
+	'edTitulos(iPosFiltro).Text = edInputText.Text
+
+	pnInputText.Visible = False
+	
+End Sub
+

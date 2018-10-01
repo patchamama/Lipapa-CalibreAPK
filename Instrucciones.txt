@@ -1,0 +1,160 @@
+-----------
+ LIPAPA T1
+-----------
+Indice:
+- INSTALACIÓN
+- CONFIGURACIÓN
+- USO
+- CALIBRE
+
+
+- INSTALACIÓN:
+==============
+
+1. Descomprime el zip en tu PC.
+2. En el T1 rooteado, en /mnt/extsd (la microSD) crea una carpeta (por ejemplo, con Root Explorer) llamada .LIBROS (con el punto delante y todo en mayúsculas), otra llamada .PORTADAS (recuerda poner el punto y que esté todo en mayúsculas) y otra llamada MISLIBROS (sin punto delante, y también en mayúsculas).
+3. En una instalación real (con tus libros), en .LIBROS meterías la estructura de tres niveles que genera Lipapa al hacer Operaciones con Ficheros / Copia Estructurada.
+4. Para este ejemplo, copia el contenido de la carpeta Portadas del zip descomprimido en tu pc (es decir, las carpetas 01, 02, 03, ...) en la carpeta .PORTADAS del T1. En una instalación real aquí irían tus portadas una vez estructuradas con Lipapa Marte PC (Portadas / Organizar Portadas, copiando la carpeta completa de portadas, o Portadas / Exportar Portadas Estructuradas, para que sólo copie las portadas de los libros filtrados).
+5. Copia el fichero lipapa_t1.ini a la carpeta /mnt/extsd/ del T1.
+6. Copia la base de datos (lipapa.sqlite) también a /mnt/extsd/ en el T1. En una instalación real, tras usar lipapa Marte PC para generar esa el contenido de esa bd, la copiarías en /mnt/extsd/, sobrescribiendo la existente. Lipapa Marte PC sólo exporta a lipapa.sqlite los datos filtrados, pero el último lipapa que subí exporta pensando en Lipapa Android, que usa más campos que Lipapa T1, por lo que, aunque la bd va a funcionar, lleva más campos de los que son necesarios, e irá más lento que con la que ahora crea lipapa y he de distribuiros este fin de semana.
+7. Copia el .apk de Lipapa T1 a la sd, y ejecútalo para que se instale. Acepta todo. 
+
+Tras seguir esos pasos tendrás en /mnt/extsd/ lo siguiente:
+
+=> .LIBROS (vacío en este ejemplo, pues no distribuyo material con derechos de autor, aunque todos sabéis de dónde bajarlos)
+
+=> .PORTADAS (contendrá las miniportadas, metidas en las subcarpetas 00, 01, 02, 03, ... , 98, 99)
+
+=> MISLIBROS (lugar en el que se irán copiando los libros que se vayan a abriendo. Es recomendable borrar libros ya leídos, con el fin de que no se lleguen a acumular más de 1500 libros, para que no sufra el catalogador del T1)
+
+=> lipapa_t1.ini (contiene las 9 líneas de configuración de lipapa, que s explican después. Salvo que se sepa lo que se está haciendo, es mejor no modificarlo -como todo en esta vida-)
+
+=> lipapa.sqlite (la base de datos que genera Lipapa PC con los datos de los libros filtrados)
+
+=> LipapaT1.apk (la aplicación a instalar. Una vez instalada, puedes borrar el fichero)
+
+
+Tras la instalación, lipapa pasa a estar en la barra de la tercera pantalla del Sony T1.
+
+- CONFIGURACIÓN:
+================
+
+Antes de ejecutar Lipapa T1 puedes cambiar alguno de sus parámetros. Para ello hay que editar el fichero lipapa_t1.ini con un editor tipo Jota (en el T1) o NotePad++ (en el PC). Hay 9 líneas, una de ellas en blanco (porque no se pone ningún filtro por defecto):
+
+1. Ruta de la B.D. (por defecto, /mnt/extsd/)
+
+2. Ordenación al arrancar y al borrar la ordenación puesta por el usuario (por defecto, EXPECTATIVA DESC, NUMERO DESC)
+
+3. Filtro al arrancar y al borrar el filtro puesto por el usuario (por defecto, ninguno)
+
+4. Carpeta en la que está la estructura con los libros (por defecto, /mnt/extsd/.LIBROS/)
+
+5. Carpeta no oculta en la que se copiarán los libros, si la opción 9 es "OCULTO" (por defecto, /mnt/extsd/MISLIBROS/)
+
+6. Carpeta en la que están las miniportadas (por defecto, /mnt/extsd/.PORTADAS/)
+
+7. Divisor usado para calcular el número aproximado de páginas. Este dato se calcula en los fb2 desde lipapa Marte, eliminando los metadatos y los binarios y contando el número de letras. Para hallar el número de páginas se usa ese número de letras dividido entre el número que se indica en esta línea (por defecto, 2095)
+
+8. Número de letras a eliminar al principio de RUTAPAPYRE para localizar el libro en el T1. Mis libros los genero de modo que un libro de Asimov esté en C:\LIBROS\A\AS\ASI\Asimov, Isaac\... El programa elimina de Rutapapyre las primeras letras (en mi caso, 10), de modo que la rute se quede en A\AS\ASI\Asimov, Isaac\..... Ahora se pone por delante la ruta indicada en 4 (/mnt/extsd/.LIBROS/) y ya tenemos la ubicación del libro en el T1. Si, por ejemplo, vosotros generáis la copia en el ebook desde lipapa en C:\MI BIBLIOTECA\FB2\A\AS\ASI\Asimov, Isaac\..., tendríais que cambiar el 10 por 21 (si no he contado mal) para que eliminara las primeras 21 letras (C:\MI BIBLIOTECA\FB2\). Para no liarse, lo mejor es generar en C:\Libros\ y todos tan felices.
+
+9. Si los libros están en una carpeta oculta y se requiere su copia previa para que CoolReader los pueda abrir, esta línea contendrá "OCULTO", en otro caso podéis poner lo que os dé la gana (por ejemplo, "NO_OCULTO"). Si está oculto copia y abre la copia. Si no está oculto, abre directamente en la ruta obtenida según 8. La copia se hace en la carpeta indicada en 5, que ha de ser creada por vosotros antes de ejecutar lipapa T1 la primera vez.
+
+El fichero por defecto es:
+
+/mnt/extsd/
+EXPECTATIVA DESC, NUMERO DESC
+
+/mnt/extsd/.LIBROS/
+/mnt/extsd/MISLIBROS/
+/mnt/extsd/.PORTADAS/
+2095
+10
+OCULTO
+
+En la tercera línea podríamos poner lo siguiente, si por ejemplo quisiéramos que al iniciar Lipapa T1 sólo se mostrasen los libros leídos:
+
+LEIDO = 1
+
+Aquí hay que hacer varias puntualizaciones:
+
+a) El filtro del fichero INI se va a mantener todo el tiempo, y no hay forma de quitarlo. Es decir, en el caso anterior, cualquier otro filtro adicional que pongamos desde el programa se va a aplicar teniendo en cuenta que sólo se tratan los libros marcados como LEIDO = 1 (True), por lo que los libros no leídos nunca llegarían a aparecer. Al borrar desde Lipapa T1 el filtro o filtros seleccionados, se regresa al filtro inicial, que vuelve a ser LEIDO = 1. Así, la utilidad viene de poner filtros que eliminan libros que no nos interesen, ni ahora, ni aunque nos caiga una maceta en la cabeza o nos peguen un tiro al ir a comprar tabaco (por ejemplo, Romántica, Autoayuda y cosas así). Por eso está puesto como vacío por defecto. Una opción interesante es marcarlo como DESCARTABLE = 0, y desde lipapa poner la marcar como descartables los libros que no nos interesen, pero no queramos borrar, por si algún conocido/a los quiere leer.
+
+b) Los campos de la base de datos hay que ponerlos siempre en mayúsculas, tanto para ordenar como para filtrar, y son (en la bd especial que genera el nuevo lipapa -que todavía vosotros no tenéis- para el T1):
+
+   [Campo]			    TIPO
+-------------		------------
+NUMERO 				INTEGER
+SAGA 				TEXT
+TITULO 				TEXT
+AUTOR 				TEXT
+LEIDO 				INTEGER
+FAVORITOS 			INTEGER
+GENERO 				TEXT
+RESUMEN 			TEXT
+IDIOMA 				TEXT
+ANNOPUBLICACION 	INTEGER
+ESTRELLAS 			INTEGER
+VOTOS 				INTEGER
+RUTAPAPYRE 			TEXT
+ABANDONADO 			INTEGER
+NUMLETRAS 			INTEGER
+EXPECTATIVA 		INTEGER
+DESCARTABLE 		INTEGER
+
+En los campos de tipo lógico (LEIDO, FAVORITOS, ABANDONADO, DESCARTABLE) el valor True (Verdadero) es el 1, y el False (Falso) es el 0.
+El campo ESTRELLAS es la puntuación que el libro ha obtenido en la web amiga, que se basa en una escala 50-500, es decir, la puntuación mínima es 50 y la máxima es 500. Si un libro tiene 0 puntos es porque nadie lo ha puntuado todavía. El campo VOTOS indica cuántas personas lo han puntuado. Siempre que se ordene (desde Lipapa T1) por estrellas, se añade la ordenación VOTOS DESC (DESC significa descendente, es decir, de mayor a menor). 
+
+c) La ordenación que se ponga en el fichero de configuración como orden por defecto SÍ ES ELIMINADA al poner otra ordenación desde Lipapa T1, a diferencia de lo que ocurre con el filtro.
+
+
+- USO:
+======
+
+EL programa es muy sencillo de usar. Al arrancarlo la pantalla estará unos segundos en blanco, preparando la aplicación y la base de datos. Luego veréis tres zonas diferenciadas:
+
+a) LA lista de portadas: se muestran las miniportadas de los primeros 8 libros (según la ordenación activa). Las miniportadas incluyen un cuadro (esquina inferior izquierda) que indica la expectativa que tenéis para ese libro (es una medida del interés que os suscita). Yo usaba una escala del 1 al 100, para aquellos marcados como favoritos (tengo más de 1000, lo que hace la marca de favoritos bastante inútil por si sola). Luego he ido encontrando libros que me apetecñian aún más, y por eso ya voy por 112 como "expectativa" máxima. Bajo cada miniportada se encuentra la valoración de ese libro en papyrefb2.net (el campo ESTRELLAS traducido a dibujitos) y el número de votos. En ocasiones resulta chocante que habiendo ordenado (ahora veremos cómo se hace) por ESTRELLAS decreciente, lo que automáticamente añade la ordenación por VOTOS decreciente, al recorrer la lista de portadas vemos libros que tienen las mismas estrellas, y aparece antes uno con menos votos. No es que Lipapa ordene mal, es que el dibujo de las estrellas respresenta un abanico de 50 puntos. Así, un libro con 450 puntos se marca con cuatro estrellas y media, y uno con 499,99 puntos también se representa con cuatro estrellas y media (las cinco estrellas son para libros en los que todo el mundo ha puesto la máxima puntuación). Así, un libro con 451 puntos y 1 voto aparece antes que uno con 450 puntos y 300 votos, aunque ambos dibujen cuatro estrellas y media. LIPAPA NO FALLA (en esas cosas ;))
+
+b) La ficha del libro, con datos como la saga, título, autor, año de publicación, género, idioma, nº de libro expectativa y páginas aproximadas. Además, se marca como L: leído, F: favorito (nos gustaría leerlo), A: abandonado (lo empezamos a leer y fue un tostón que no terminamos) y D: descartable (ignorado antes de leerlo). Y luego viene la reseña (lo que quepa de ella). Al pulsar sobre la ficha con una pulsación corta, se abre el libro con CoolReader directamente (según la línea 9 de lipapa_t1.ini sea OCULTO o no, se copia antes en la carpeta visible o se abre directamente). Con una pulsación larga, se abre la lista de aplicaciones capaces de trabajar con los ficheros de tipo mime "text/*" (en mi T1 no sale CoolReader en esa lista, pero sí sale Jota Text, para poder editar los fb2).
+
+c) A la derecha, los minibotones, que son la forma de interactuar con lipapa. Son, por orden:
+
+=> La casita: si está activo el botón de filtro (lupa), elimina los filtros puestos por el usuario y regresa al filtro por defecto (el de lipapa_t1.ini). Si no está activo el botón de filtro, elimina las ordenaciones del usuario y regresa a la ordenación por defecto (la de lipapa_t1.ini).
+
+=> Ir a la lista de miniportadas anterior: ver las 8 miniportadas anteriores, si existen.
+
+=> Ordenar / Filtrar: por defecto, los botones que vienen tras éste (y la casita) sirven para ordenar. Si pulsamos este botón se queda iluminado, y los botones inferiores (y la casita) sirven para filtrar. Tanto ordenaciones como filtros son acumulativos. Así, puedo filtrar por Nº de libro >= 100, y luego por Nº de libro <= 200, y luego por género = Terror, y veré en lipapa T1 sólo los libros de terror con números entre 100 y 200. Si estando activo el botón Ordenar / Filtrar (iluminado) pulso la casita, borro el filtro y pongo el de lipapa-t1.ini (por defecto, ninguno, es decir, se muestran todos los libros). Las ordenaciones también se acumulan. Así, puedo ordenar por género, y dentro de éste, por autor, y dentro de éste por expectativa...
+
+=> Ordenar / Filtrar por título. En el filtro, se mostrarán sólo los libros que contengan la cadena que escribamos. Las mayúsculas y minúsculas son indiferentes, pero LOS ACENTOS SON NECESARIOS. Al ordenar, permite que indiquemos si será un orden ascendente o descendente.
+
+=> Ordenar / Filtrar por autor: como en título.
+
+=> Ordenar / Filtrar por saga: como los anteriores.
+
+=> Ordenar / Filtrar por número (la llave): al ordenar es como los anteriores, pero al filtrar, como es un campo numérico, permite que elijamos si se han de buscar los valores mayoreo o iguales al escrito, o los menores o iguales. Para buscar un valor exacto, se pone un filtro mayor o igual y luego otro menor o igual. El único libro que lo cumplirá será el que sea igual al valor indicado. Todos los filtros numéricos actúan así.
+
+=> Ordenar / Filtrar por expectativa: como en número.
+
+=> Ordenar / Filtrar por puntuación de la web (estrellas): como en numero. Recuerda que las puntuaciones de papyrefb2 están en el rango 50-500, y que una puntuación = 0 significa que nadie ha valorado ese libro. En el caso de la ordenación, con independencia de que sea ascendente o descendente, se añade otra ordenación por VOTOS descendente (de más a menos).
+
+=> Ordenar / Filtrar por Género: como saga.
+
+=> Ordenar / Filtrar por Idioma: como género.
+
+=> Ordenar / Filtrar por año de primera publicación: como el resto de los botones de campos numéricos (número, expectativa, etc.)
+
+=> Ir a la siguiente lista de 8 portadas.
+
+=> Salir de lipapa
+
+
+***CALIBRE (se puede usar si se desea solo con bases de datos de calibre).
+Editar el archivo lipapa_bds.ini y especificar la ruta en dispositivo android en que se encuentra la bds o ruta de biblioteca de calibre (puede estar en el sdcard o en la memoria interna). Por ejemplo, si la base de datos está en la carpeta personal/metadata.db entonces poner solamente la línea (se debe de poner toda la biblioteca de calibre en la carpeta personal junto con la base de datos):
+
+personal/metadata.db
+
+*Si se va actualizar desde un servidor personal por ftp toda la base de datos de calibre, puede agregarse junto con la ruta de la base de datos, los datos de acceso al ftp de esta:
+
+personal/metadata.db%type=ftp%host=ftp.myhost%user=myftpuser%pass=myftppass%path=myPathInFtpToCalibreLibrary
+
+Esta última opción, permite tener solo la base de datos sin los libros en el dispositivo android y ahorrar espacio. Se pueden poner varias líneas con diferentes bases de datos (bibliotecas de calibre).
+
