@@ -12,7 +12,7 @@ Ver archivo instrucciones.txt
 
 ## Example Screenshots
 ![GitHub Logo](/examples/example1.png)
-![GitHub Logo](/examples/example2.png =250x)
+![GitHub Logo](/examples/example2.png)
 
 # Features
 El programa permite gestionar varias bases de datos sqlite de lipapa o calibre (https://calibre-ebook.com), hacer búsquedas, compartir libro, abrir libro con una aplicación instalada en el dispositivo.
