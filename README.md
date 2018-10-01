@@ -11,8 +11,8 @@ Para compilar el código fuente es necesario tener instalado basic4Android (http
 Ver archivo instrucciones.txt
 
 ## Example Screenshots
-![GitHub Logo](/examples/example1.png)
-![GitHub Logo](/examples/example2.png)
+![](/examples/example1.png =250x)
+![](/examples/example2.png =250x)
 
 # Features
 El programa permite gestionar varias bases de datos sqlite de lipapa o calibre (https://calibre-ebook.com), hacer búsquedas, compartir libro, abrir libro con una aplicación instalada en el dispositivo.
